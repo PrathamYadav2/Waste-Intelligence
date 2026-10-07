@@ -1,0 +1,29 @@
+image_classifier:
+  backbone: mobilenet_v3_small
+  input_size:
+  - 224
+  - 224
+  normalization:
+    mean:
+    - 0.485
+    - 0.456
+    - 0.406
+    std:
+    - 0.229
+    - 0.224
+    - 0.225
+  split:
+    train: 0.7
+    val: 0.15
+    test: 0.15
+    stratified: true
+    seed: 42
+  augmentation:
+  - horizontal_flip
+  - rotation
+  - color_jitter
+  confidence_threshold: 0.5
+  batch_size: 32
+  num_epochs: 5
+  learning_rate: 0.001
+registry_dir: ${MODEL_REGISTRY_DIR:-models}

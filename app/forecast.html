@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast & Capacity Planning - Waste Recovery Intelligence</title>
+<link rel="stylesheet" href="styles/tokens.css"><link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/layout.css"><link rel="stylesheet" href="styles/components.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<div class="shell"><nav class="sidebar" aria-label="Primary"><div class="brand">Waste Recovery Intelligence<small style="color:#2e7d32; font-weight:bold;">ML Models Connected</small></div><ul class="nav"><li><a href="index.html">Dashboard</a></li><li><a href="scanner.html">AI Waste Scanner</a></li><li><a href="result.html">Waste Analysis Result</a></li><li><a href="recovery.html">Recovery Recommendation</a></li><li><a href="regional.html">Regional Waste Intelligence</a></li><li><a href="forecast.html" aria-current="page">Forecast & Capacity Planning</a></li><li><a href="map.html">Interactive Waste Map</a></li><li><a href="community.html">Community Action</a></li><li><a href="model-performance.html">Model Performance</a></li><li><a href="explainable-ai.html">Explainable AI</a></li><li><a href="system-health.html">System & Data Health</a></li></ul></nav>
+<main class="main" id="main"><header class="page-head"><h1>Forecast & Capacity Planning</h1><p>Forecast waste generation and show capacity gaps.</p></header>
+
+<div data-state="ready">
+<div data-show="empty"><div class="state"><h3>Nothing here yet</h3><p>No forecast available. Train a forecasting model first.</p></div></div>
+<div data-show="loading" aria-busy="true"><div class="state"><div class="skeleton" style="width:40%"></div><div class="skeleton"></div><div class="skeleton" style="width:80%"></div></div></div>
+<div data-show="error" role="alert"><div class="state error"><h3>Could not load this page</h3><p>The request failed. Check the system status page, then retry.</p><button class="btn">Retry</button></div></div>
+<div data-show="ready"><div class="grid cols-2"><section class="card" aria-labelledby="h-32849"><h3 id="h-32849">Forecast chart</h3><div class="chart-box">Chart appears here once data is connected.</div></section>
+<section class="card" aria-labelledby="h-79432"><h3 id="h-79432">Model used</h3><p class="meta">Details appear here.</p></section>
+<section class="card" aria-labelledby="h-79243"><h3 id="h-79243">Capacity gap</h3><div class="table-wrap"><table class="table"><thead><tr><th>Column</th><th class="num">Value</th></tr></thead><tbody><tr><td colspan="2" class="meta">No rows.</td></tr></tbody></table></div></section>
+<section class="card" aria-labelledby="h-96948"><h3 id="h-96948">Priority regions</h3><div class="table-wrap"><table class="table"><thead><tr><th>Column</th><th class="num">Value</th></tr></thead><tbody><tr><td colspan="2" class="meta">No rows.</td></tr></tbody></table></div></section></div></div>
+</div></main></div><script src="assets/app.js"></script></body></html>
+

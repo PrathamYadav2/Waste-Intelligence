@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waste Analysis Result - Waste Recovery Intelligence</title>
+<link rel="stylesheet" href="styles/tokens.css"><link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/layout.css"><link rel="stylesheet" href="styles/components.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<div class="shell"><nav class="sidebar" aria-label="Primary"><div class="brand">Waste Recovery Intelligence<small style="color:#2e7d32; font-weight:bold;">ML Models Connected</small></div><ul class="nav"><li><a href="index.html">Dashboard</a></li><li><a href="scanner.html">AI Waste Scanner</a></li><li><a href="result.html" aria-current="page">Waste Analysis Result</a></li><li><a href="recovery.html">Recovery Recommendation</a></li><li><a href="regional.html">Regional Waste Intelligence</a></li><li><a href="forecast.html">Forecast & Capacity Planning</a></li><li><a href="map.html">Interactive Waste Map</a></li><li><a href="community.html">Community Action</a></li><li><a href="model-performance.html">Model Performance</a></li><li><a href="explainable-ai.html">Explainable AI</a></li><li><a href="system-health.html">System & Data Health</a></li></ul></nav>
+<main class="main" id="main"><header class="page-head"><h1>Waste Analysis Result</h1><p>Show what the model saw: waste type, material, confidence and the recovery path.</p></header>
+<ol class="chain" aria-label="Recovery pipeline"><li data-state="pending"><div class="step">Image</div><div class="value">-</div></li><li data-state="pending"><div class="step">Waste type</div><div class="value">-</div></li><li data-state="pending"><div class="step">Material</div><div class="value">-</div></li><li data-state="pending"><div class="step">Recovery score</div><div class="value">-</div></li><li data-state="pending"><div class="step">Route</div><div class="value">-</div></li></ol>
+<div data-state="ready">
+<div data-show="empty"><div class="state"><h3>Nothing here yet</h3><p>No analysis to show. Start from the AI Waste Scanner.</p></div></div>
+<div data-show="loading" aria-busy="true"><div class="state"><div class="skeleton" style="width:40%"></div><div class="skeleton"></div><div class="skeleton" style="width:80%"></div></div></div>
+<div data-show="error" role="alert"><div class="state error"><h3>Could not load this page</h3><p>The request failed. Check the system status page, then retry.</p><button class="btn">Retry</button></div></div>
+<div data-show="ready"><div class="grid cols-2"><section class="card" aria-labelledby="h-90333"><h3 id="h-90333">Prediction</h3><p class="meta">Prediction appears here.</p></section>
+<section class="card" aria-labelledby="h-19245"><h3 id="h-19245">Confidence</h3><div class="confidence"><div>Confidence: -</div><div class="bar"><span></span></div></div></section>
+<section class="card" aria-labelledby="h-85779"><h3 id="h-85779">Recovery score</h3><div class="score-ring" style="--value:0" role="img" aria-label="Recovery score unavailable"><span>-</span></div></section>
+<section class="card" aria-labelledby="h-66603"><h3 id="h-66603">Top alternatives</h3><div class="table-wrap"><table class="table"><thead><tr><th>Column</th><th class="num">Value</th></tr></thead><tbody><tr><td colspan="2" class="meta">No rows.</td></tr></tbody></table></div></section></div></div>
+</div></main></div><script src="assets/app.js"></script></body></html>
+

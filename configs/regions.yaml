@@ -1,0 +1,63 @@
+regions:
+- Mumbai
+- Navi Mumbai
+- Thane
+- Kalyan
+- Pune
+- Nashik
+- Nagpur
+- Aurangabad
+- Amravati
+- Chandrapur
+- Kolhapur
+- Raigad
+coordinates:
+  Mumbai:
+    latitude: 19.076
+    longitude: 72.8777
+    anchor_place: Mumbai (Greater Mumbai)
+  Navi Mumbai:
+    latitude: 19.033
+    longitude: 73.0297
+    anchor_place: Navi Mumbai
+  Thane:
+    latitude: 19.2183
+    longitude: 72.9781
+    anchor_place: Thane
+  Kalyan:
+    latitude: 19.2437
+    longitude: 73.1355
+    anchor_place: Kalyan
+  Raigad:
+    latitude: 18.6414
+    longitude: 72.8722
+    anchor_place: Alibag (Raigad district HQ)
+  Pune:
+    latitude: 18.5204
+    longitude: 73.8567
+    anchor_place: Pune
+  Kolhapur:
+    latitude: 16.705
+    longitude: 74.2433
+    anchor_place: Kolhapur
+  Nashik:
+    latitude: 19.9975
+    longitude: 73.7898
+    anchor_place: Nashik
+  Aurangabad:
+    latitude: 19.8762
+    longitude: 75.3433
+    anchor_place: Chhatrapati Sambhajinagar (Aurangabad)
+  Amravati:
+    latitude: 20.932
+    longitude: 77.7523
+    anchor_place: Amravati
+  Nagpur:
+    latitude: 21.1458
+    longitude: 79.0882
+    anchor_place: Nagpur
+  Chandrapur:
+    latitude: 19.9615
+    longitude: 79.2961
+    anchor_place: Chandrapur
+ranking: by_pressure_index

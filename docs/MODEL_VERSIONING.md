@@ -1,0 +1,2 @@
+# Model Versioning
+Each trained artifact gets a `model_versions` row: kind, name, semantic version, artifact URI, training dataset, config hash, metrics (from real runs only), status (registered -> staging -> production -> retired). Predictions reference the model version. Promotion requires evaluation report + review. Weights are never committed (git-ignored). Rollback = set previous version active.

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Waste AI Intelligence - System Documentation</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #1e293b;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px;
+      background: #f8fafc;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    h1, h2, h3 { color: #0f172a; }
+    h1 { border-bottom: 2px solid #10b981; padding-bottom: 12px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .highlight-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 16px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+    .warn-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th { background: #f1f5f9; font-weight: 600; }
+    tr:nth-child(even) { background: #f8fafc; }
+    code {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    .btn {
+      display: inline-block;
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 10px 0;
+    }
+    .btn:hover { background: #059669; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>♻️ AI Waste Segregation, Recycling & Forecasting System</h1>
+    <p>
+      <span class="badge badge-green">Python 3.12</span>
+      <span class="badge badge-blue">PyTorch MobileNetV3</span>
+      <span class="badge badge-green">FastAPI</span>
+      <span class="badge badge-amber">14 Tests Passing</span>
+      <span class="badge badge-blue">Production Ready</span>
+    </p>
+    <p>End-to-End Decision Intelligence System integrating deep learning image classification, Grad-CAM explainability, circular economy recycling analytics, and regional waste generation forecasting across Maharashtra.</p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Quick Start: Model & Dashboard Kaise Chalayein?</h2>
+    <div class="highlight-box">
+      <strong>Sabse Aasan Tarika (1-Click Run):</strong><br>
+      Folder me <code>start.bat</code> (ya <code>Launch_Waste_AI.bat</code>) par double click karein.<br>
+      Server start hokar aapke browser me automatic dashboard khol dega:
+      <br><br>
+      <a class="btn" href="http://127.0.0.1:8000/" target="_blank">Open Live Dashboard (http://127.0.0.1:8000/)</a>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ .pth File Par Click Karne Par Kya Karein?</strong><br>
+      <code>models/image_classifier/realwaste_mobilenet_v3.pth</code> file ek PyTorch deep learning weights file hai. Windows isko double click karke directly open nahi kar sakta. Model ko chalane ke liye upar diye gaye <code>start.bat</code> ko use karein ya command line se <code>python predict.py</code> chalayein.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Machine Learning Model Benchmarks</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Specification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Neural Backbone</strong></td><td>PyTorch MobileNetV3-Small (Transfer Learning)</td></tr>
+        <tr><td><strong>Trained Weights File</strong></td><td><code>models/image_classifier/realwaste_mobilenet_v3.pth</code> (6.24 MB)</td></tr>
+        <tr><td><strong>Test Set Accuracy</strong></td><td><strong>78.26%</strong> (713 independent holdout samples)</td></tr>
+        <tr><td><strong>Macro F1-Score</strong></td><td><strong>79.26%</strong></td></tr>
+        <tr><td><strong>Best Validation Acc</strong></td><td><strong>81.63%</strong></td></tr>
+        <tr><td><strong>Input Stability</strong></td><td>Square-pad geometry preservation + 3-view Test-Time Augmentation (TTA)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>9 Waste Categories & Bin Routing</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>F1-Score</th>
+          <th>Stream Type</th>
+          <th>Assigned Bin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Vegetation</strong></td><td>0.939</td><td>Wet / Organic</td><td>🟢 Green Bin</td></tr>
+        <tr><td><strong>Food Organics</strong></td><td>0.860</td><td>Wet Waste</td><td>🟢 Green Bin</td></tr>
+        <tr><td><strong>Cardboard</strong></td><td>0.857</td><td>Dry Recyclable</td><td>🔵 Blue Bin</td></tr>
+        <tr><td><strong>Textile Trash</strong></td><td>0.804</td><td>Secondary Recovery</td><td>⚪ Special Segregation</td></tr>
+        <tr><td><strong>Metal</strong></td><td>0.779</td><td>High-Value Alloy</td><td>🔵 Blue Bin</td></tr>
+        <tr><td><strong>Glass</strong></td><td>0.767</td><td>Cullet Recycling</td><td>🔵 Blue Bin</td></tr>
+        <tr><td><strong>Paper</strong></td><td>0.766</td><td>Cellulose Fibre</td><td>🔵 Blue Bin</td></tr>
+        <tr><td><strong>Plastic</strong></td><td>0.750</td><td>Polymers (PET/HDPE)</td><td>🔵 Blue Bin</td></tr>
+        <tr><td><strong>Misc Trash</strong></td><td>0.612</td><td>Inerts / Non-recyclable</td><td>⚫ Black Bin (RDF)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>📈 Regional Forecasting Projections (2024–2027)</h2>
+    <p>Damped Linear Trend Model trained on 8 years (2016–2023) of audited municipal solid waste generation data across Maharashtra:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Urban Region</th>
+          <th>2023 Baseline</th>
+          <th>2024 Forecast</th>
+          <th>2027 Forecast</th>
+          <th>Net Change (by 2027)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Pune</strong></td><td>4,439.9 TPD</td><td>4,510.7 TPD</td><td><strong>4,723.2 TPD</strong></td><td>+283.2 TPD (+6.4%) ↗</td></tr>
+        <tr><td><strong>Nashik</strong></td><td>2,245.1 TPD</td><td>2,277.7 TPD</td><td><strong>2,375.7 TPD</strong></td><td>+130.6 TPD (+5.8%) ↗</td></tr>
+        <tr><td><strong>Thane</strong></td><td>2,148.9 TPD</td><td>2,178.3 TPD</td><td><strong>2,266.5 TPD</strong></td><td>+117.6 TPD (+5.5%) ↗</td></tr>
+        <tr><td><strong>Nagpur</strong></td><td>1,688.0 TPD</td><td>1,710.6 TPD</td><td><strong>1,778.3 TPD</strong></td><td>+90.3 TPD (+5.3%) ↗</td></tr>
+        <tr><td><strong>Aurangabad</strong></td><td>1,858.6 TPD</td><td>1,878.9 TPD</td><td><strong>1,939.8 TPD</strong></td><td>+81.3 TPD (+4.4%) ↗</td></tr>
+        <tr><td><strong>Chandrapur</strong></td><td>503.5 TPD</td><td>514.9 TPD</td><td><strong>549.3 TPD</strong></td><td>+45.8 TPD (+9.1%) ↗</td></tr>
+        <tr><td><strong>Amravati</strong></td><td>809.9 TPD</td><td>818.2 TPD</td><td><strong>843.2 TPD</strong></td><td>+33.2 TPD (+4.1%) ↗</td></tr>
+        <tr><td><strong>Kolhapur</strong></td><td>823.1 TPD</td><td>828.8 TPD</td><td><strong>845.8 TPD</strong></td><td>+22.6 TPD (+2.7%) ↗</td></tr>
+        <tr><td><strong>Raigad</strong></td><td>593.4 TPD</td><td>630.8 TPD</td><td><strong>743.2 TPD</strong></td><td>+149.8 TPD (+25.2%) ↗</td></tr>
+        <tr><td><strong>Navi Mumbai</strong></td><td>743.0 TPD</td><td>741.2 TPD</td><td><strong>735.9 TPD</strong></td><td>-7.1 TPD (-1.0%) ↘</td></tr>
+        <tr><td><strong>Kalyan</strong></td><td>1,606.0 TPD</td><td>1,589.6 TPD</td><td><strong>1,540.5 TPD</strong></td><td>-65.5 TPD (-4.1%) ↘</td></tr>
+        <tr><td><strong>Mumbai</strong></td><td>6,690.0 TPD</td><td>6,509.3 TPD</td><td><strong>5,967.0 TPD</strong></td><td>-723.0 TPD (-10.8%) ↘</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧪 Automated Test Suite</h2>
+    <pre>
+tests/integration/test_api_contract.py PASSED [ 35%]
+tests/unit/test_forecast_horizon.py PASSED    [ 50%]
+tests/unit/test_forecast_requirements.py PASSED [ 64%]
+tests/unit/test_label_mapping_config.py PASSED [ 71%]
+tests/unit/test_scaffold_contracts.py PASSED   [100%]
+======================= 14 passed in 13.52s =======================
+    </pre>
+  </div>
+
+</body>
+</html>

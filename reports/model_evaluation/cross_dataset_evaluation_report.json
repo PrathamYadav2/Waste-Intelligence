@@ -1,0 +1,302 @@
+{
+  "trashnet": {
+    "total_samples": 2527,
+    "accuracy": 0.32014246141669966,
+    "macro_precision": 0.3365077797993841,
+    "macro_recall": 0.20918999955287146,
+    "macro_f1": 0.16701604852422994,
+    "weighted_f1": 0.26776800074684687,
+    "per_class": {
+      "Cardboard": {
+        "precision": 0.2564962279966471,
+        "recall": 0.7593052109181141,
+        "f1": 0.38345864661654133,
+        "support": 403
+      },
+      "Glass": {
+        "precision": 0.3284671532846715,
+        "recall": 0.17964071856287425,
+        "f1": 0.23225806451612904,
+        "support": 501
+      },
+      "Metal": {
+        "precision": 0.31542857142857145,
+        "recall": 0.6731707317073171,
+        "f1": 0.42957198443579764,
+        "support": 410
+      },
+      "Paper": {
+        "precision": 0.8712121212121212,
+        "recall": 0.1936026936026936,
+        "f1": 0.3168044077134986,
+        "support": 594
+      },
+      "Plastic": {
+        "precision": 0.9411764705882353,
+        "recall": 0.03319502074688797,
+        "f1": 0.06412825651302605,
+        "support": 482
+      },
+      "Miscellaneous Trash": {
+        "precision": 0.3157894736842105,
+        "recall": 0.043795620437956206,
+        "f1": 0.07692307692307693,
+        "support": 137
+      }
+    },
+    "labels": [
+      "Cardboard",
+      "Glass",
+      "Metal",
+      "Paper",
+      "Plastic",
+      "Miscellaneous Trash"
+    ],
+    "confusion_matrix": [
+      [
+        306,
+        3,
+        79,
+        3,
+        0,
+        9
+      ],
+      [
+        149,
+        90,
+        255,
+        0,
+        1,
+        0
+      ],
+      [
+        122,
+        10,
+        276,
+        0,
+        0,
+        0
+      ],
+      [
+        408,
+        3,
+        62,
+        115,
+        0,
+        3
+      ],
+      [
+        143,
+        166,
+        151,
+        4,
+        16,
+        1
+      ],
+      [
+        65,
+        2,
+        52,
+        10,
+        0,
+        6
+      ]
+    ],
+    "dataset": "TrashNet",
+    "role": "secondary_cross_dataset_evaluation",
+    "domain_shift_notes": "TrashNet consists of single items on white backgrounds, introducing domain shift relative to RealWaste outdoor/real-world scenes.",
+    "mapped_classes": [
+      "Cardboard",
+      "Glass",
+      "Metal",
+      "Paper",
+      "Plastic",
+      "Miscellaneous Trash"
+    ],
+    "unmapped_realwaste_classes": [
+      "Food Organics",
+      "Textile Trash",
+      "Vegetation"
+    ]
+  },
+  "taco": {
+    "total_samples": 1475,
+    "accuracy": 0.07389830508474576,
+    "macro_precision": 0.144974308196129,
+    "macro_recall": 0.18285102867595932,
+    "macro_f1": 0.07730220397307257,
+    "weighted_f1": 0.09198823713508739,
+    "per_class": {
+      "Cardboard": {
+        "precision": 0.26595744680851063,
+        "recall": 0.24752475247524752,
+        "f1": 0.2564102564102564,
+        "support": 101
+      },
+      "Food Organics": {
+        "precision": 0.006369426751592357,
+        "recall": 1.0,
+        "f1": 0.012658227848101266,
+        "support": 2
+      },
+      "Glass": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 59
+      },
+      "Metal": {
+        "precision": 0.21052631578947367,
+        "recall": 0.1782178217821782,
+        "f1": 0.19302949061662197,
+        "support": 202
+      },
+      "Miscellaneous Trash": {
+        "precision": 0.08441558441558442,
+        "recall": 0.14285714285714285,
+        "f1": 0.10612244897959183,
+        "support": 91
+      },
+      "Paper": {
+        "precision": 0.13333333333333333,
+        "recall": 0.04597701149425287,
+        "f1": 0.06837606837606838,
+        "support": 87
+      },
+      "Plastic": {
+        "precision": 0.6041666666666666,
+        "recall": 0.031082529474812434,
+        "f1": 0.059123343527013254,
+        "support": 933
+      },
+      "Textile Trash": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "Vegetation": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "labels": [
+      "Cardboard",
+      "Food Organics",
+      "Glass",
+      "Metal",
+      "Miscellaneous Trash",
+      "Paper",
+      "Plastic",
+      "Textile Trash",
+      "Vegetation"
+    ],
+    "confusion_matrix": [
+      [
+        25,
+        15,
+        0,
+        12,
+        13,
+        2,
+        2,
+        1,
+        31
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        16,
+        0,
+        9,
+        3,
+        2,
+        0,
+        0,
+        28
+      ],
+      [
+        11,
+        46,
+        7,
+        36,
+        13,
+        6,
+        10,
+        0,
+        73
+      ],
+      [
+        4,
+        19,
+        1,
+        8,
+        13,
+        0,
+        4,
+        1,
+        41
+      ],
+      [
+        5,
+        17,
+        1,
+        10,
+        14,
+        4,
+        3,
+        1,
+        32
+      ],
+      [
+        48,
+        199,
+        15,
+        96,
+        98,
+        16,
+        29,
+        9,
+        423
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "dataset": "TACO",
+    "role": "external_generalization_testing",
+    "domain_shift_notes": "TACO is an in-the-wild litter detection dataset (bounding boxes/segmentations). Evaluating on dominant annotated objects tests realistic domain shift.",
+    "limitations": "TACO images often contain complex multiple litter items and cluttered background; single-label classification on full images exhibits lower precision due to scene complexity without bounding box localization."
+  }
+}

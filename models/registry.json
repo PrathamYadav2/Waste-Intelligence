@@ -1,0 +1,77 @@
+{
+  "models": [
+    {
+      "model_kind": "forecaster",
+      "name": "naive_previous_year",
+      "version": "1.0.0",
+      "artifact_uri": "data/processed/forecasts_2024_2027.csv",
+      "metrics": {
+        "MAE": 72.07145833333331,
+        "RMSE": 127.17600747749816,
+        "MAPE": 3.1656511258793896,
+        "R2": 0.9944015395006071,
+        "samples_evaluated": 48
+      },
+      "metadata": {
+        "horizon_years": [
+          2024,
+          2025,
+          2026,
+          2027
+        ],
+        "regions_count": 12
+      },
+      "status": "production",
+      "created_at": "2026-10-06T17:41:36.254583+00:00"
+    },
+    {
+      "model_kind": "image_classifier",
+      "name": "RealWaste-MobileNetV3",
+      "version": "1.0.0",
+      "artifact_uri": "models/image_classifier\\realwaste_mobilenet_v3.pth",
+      "metrics": {
+        "best_val_accuracy": 0.8162692847124825,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.9311038627369319,
+            "train_acc": 0.6719783523752255,
+            "val_loss": 1.4081190507676122,
+            "val_acc": 0.5568022440392707
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.5007805203502607,
+            "train_acc": 0.8271196632591702,
+            "val_loss": 0.6020024362820897,
+            "val_acc": 0.8162692847124825
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.3356894485863016,
+            "train_acc": 0.8839446782922429,
+            "val_loss": 0.8387592246789919,
+            "val_acc": 0.7377279102384292
+          }
+        ]
+      },
+      "metadata": {
+        "backbone": "mobilenet_v3_small",
+        "num_classes": 9,
+        "class_names": [
+          "Cardboard",
+          "Food Organics",
+          "Glass",
+          "Metal",
+          "Miscellaneous Trash",
+          "Paper",
+          "Plastic",
+          "Textile Trash",
+          "Vegetation"
+        ]
+      },
+      "status": "production",
+      "created_at": "2026-10-06T17:18:54.150861+00:00"
+    }
+  ]
+}

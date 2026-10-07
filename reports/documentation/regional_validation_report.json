@@ -1,0 +1,10 @@
+{
+  "dataset": "regional_waste",
+  "passed": true,
+  "total_samples": 96,
+  "issues": [],
+  "class_distribution": {
+    "regions": 12,
+    "rows": 96
+  }
+}

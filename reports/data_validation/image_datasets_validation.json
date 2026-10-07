@@ -1,0 +1,51 @@
+{
+  "RealWaste": {
+    "dataset": "RealWaste",
+    "total_images": 4752,
+    "valid_images": 4752,
+    "corrupt_images": 0,
+    "classes_count": 9,
+    "class_distribution": {
+      "Cardboard": 461,
+      "Food Organics": 411,
+      "Glass": 420,
+      "Metal": 790,
+      "Miscellaneous Trash": 495,
+      "Paper": 500,
+      "Plastic": 921,
+      "Textile Trash": 318,
+      "Vegetation": 436
+    },
+    "formats_detected": [
+      "JPEG"
+    ],
+    "unique_resolutions_count": 1,
+    "passed": true
+  },
+  "TrashNet": {
+    "dataset": "TrashNet",
+    "total_images": 2527,
+    "valid_images": 2527,
+    "corrupt_images": 0,
+    "classes_count": 6,
+    "class_distribution": {
+      "cardboard": 403,
+      "glass": 501,
+      "metal": 410,
+      "paper": 594,
+      "plastic": 482,
+      "trash": 137
+    },
+    "formats_detected": [
+      "JPEG"
+    ],
+    "unique_resolutions_count": 1,
+    "passed": true
+  },
+  "TACO": {
+    "exists": true,
+    "images_in_coco": 1500,
+    "annotations_count": 4784,
+    "categories_count": 60
+  }
+}

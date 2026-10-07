@@ -1,0 +1,5 @@
+model_name,MAE_TPD,RMSE_TPD,MAPE_pct,R2_score,selected_champion
+naive_previous_year,72.07,127.18,3.17,0.9944,True
+linear_regression,132.4,232.12,7.19,0.9813,False
+random_forest,81.44,133.96,3.81,0.9938,False
+gradient_boosting,73.52,123.44,3.4,0.9947,False

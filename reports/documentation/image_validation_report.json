@@ -1,0 +1,37 @@
+{
+  "realwaste": {
+    "dataset": "realwaste",
+    "passed": true,
+    "total_samples": 4752,
+    "valid_samples": 4752,
+    "invalid_samples": 0,
+    "class_distribution": {
+      "Cardboard": 461,
+      "Food Organics": 411,
+      "Glass": 420,
+      "Metal": 790,
+      "Miscellaneous Trash": 495,
+      "Paper": 500,
+      "Plastic": 921,
+      "Textile Trash": 318,
+      "Vegetation": 436
+    },
+    "issues": []
+  },
+  "trashnet": {
+    "dataset": "trashnet",
+    "passed": true,
+    "total_samples": 2527,
+    "valid_samples": 2527,
+    "invalid_samples": 0,
+    "class_distribution": {
+      "cardboard": 403,
+      "glass": 501,
+      "metal": 410,
+      "paper": 594,
+      "plastic": 482,
+      "trash": 137
+    },
+    "issues": []
+  }
+}

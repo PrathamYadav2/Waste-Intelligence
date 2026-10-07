@@ -1,0 +1,67 @@
+{
+  "dataset": "regional_waste_by_year.csv",
+  "passed": true,
+  "rows": 96,
+  "columns": [
+    "report_year",
+    "region",
+    "anchor_place",
+    "latitude",
+    "longitude",
+    "gen_corporation_tpd",
+    "gen_council_A_tpd",
+    "gen_council_B_tpd",
+    "gen_council_C_tpd",
+    "gen_nagar_panchayat_tpd",
+    "gen_cantonment_tpd",
+    "gen_total_ulb_tpd",
+    "treated_corporation_tpd",
+    "treated_council_A_tpd",
+    "treated_council_B_tpd",
+    "treated_council_C_tpd",
+    "treated_nagar_panchayat_tpd",
+    "treated_cantonment_tpd",
+    "treated_total_ulb_tpd",
+    "treated_share_pct",
+    "untreated_gap_tpd",
+    "source_report",
+    "notes"
+  ],
+  "regions_count": 12,
+  "regions": [
+    "Mumbai",
+    "Navi Mumbai",
+    "Thane",
+    "Kalyan",
+    "Raigad",
+    "Pune",
+    "Kolhapur",
+    "Nashik",
+    "Aurangabad",
+    "Amravati",
+    "Nagpur",
+    "Chandrapur"
+  ],
+  "years": [
+    "2016-17",
+    "2017-18",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023"
+  ],
+  "target_summary": {
+    "column": "gen_total_ulb_tpd",
+    "min": 140.26,
+    "mean": 1940.0688541666668,
+    "max": 9083.0
+  },
+  "treatment_and_capacity_fields": {
+    "treated_total_ulb_tpd_nulls": 24,
+    "untreated_gap_tpd_nulls": 24,
+    "status": "Available for 2018-2023 (6 annual records per region)"
+  },
+  "issues": []
+}

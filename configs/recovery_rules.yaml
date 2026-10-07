@@ -1,0 +1,75 @@
+routes:
+- reuse
+- recycle
+- compost
+- material_recovery
+- authorized_ewaste_collection
+- safe_disposal
+score:
+  version: 1.0.0-verified
+  factors:
+  - material
+  - waste_category
+  - condition
+  - route_feasibility
+  - recoverability_rule
+  - local_handling
+  weights:
+    material: 0.4
+    condition: 0.25
+    route_feasibility: 0.2
+    local_handling: 0.15
+condition:
+  source: manual_or_unavailable
+category_to_candidate_routes:
+  Cardboard:
+    routes:
+    - recycle
+    - reuse
+    status: VERIFIED
+    default_route: recycle
+  Food Organics:
+    routes:
+    - compost
+    status: VERIFIED
+    default_route: compost
+  Glass:
+    routes:
+    - recycle
+    - reuse
+    status: VERIFIED
+    default_route: recycle
+  Metal:
+    routes:
+    - recycle
+    - material_recovery
+    status: VERIFIED
+    default_route: recycle
+  Miscellaneous Trash:
+    routes:
+    - safe_disposal
+    status: VERIFIED
+    default_route: safe_disposal
+  Paper:
+    routes:
+    - recycle
+    status: VERIFIED
+    default_route: recycle
+  Plastic:
+    routes:
+    - recycle
+    - material_recovery
+    status: VERIFIED
+    default_route: recycle
+  Textile Trash:
+    routes:
+    - reuse
+    - material_recovery
+    - safe_disposal
+    status: VERIFIED
+    default_route: material_recovery
+  Vegetation:
+    routes:
+    - compost
+    status: VERIFIED
+    default_route: compost

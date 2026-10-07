@@ -1,0 +1,39 @@
+target: gen_total_ulb_tpd
+entity: region
+time_column: report_year
+split:
+  strategy: rolling_origin_backtesting
+  min_train_years: 4
+  validation_years:
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+candidates:
+- naive_previous_year
+- linear_regression
+- random_forest
+- gradient_boosting
+- arima
+metrics:
+- MAE
+- RMSE
+- R2
+- MAPE
+arima_note: Only if per-region series length allows (8 points/region is short) - TO_BE_VERIFIED_DURING_IMPLEMENTATION
+capacity:
+  source: treated_total_ulb_tpd_available_from_2018
+horizon_years:
+- 2024
+- 2025
+- 2026
+- 2027
+year_mapping:
+  2016-17: 2016
+  2017-18: 2017
+  '2018': 2018
+  '2019': 2019
+  '2020': 2020
+  '2021': 2021
+  '2022': 2022
+  '2023': 2023

@@ -1,0 +1,11 @@
+app:
+  name: AI Waste Recovery Decision Intelligence
+  api_prefix: ${API_PREFIX:-/api/v1}
+  version: 0.1.0-scaffold
+logging:
+  level: ${LOG_LEVEL:-INFO}
+  format: json
+  request_id_header: X-Request-ID
+  log_predictions_to_db: true      # writes to prediction_logs (see sql/)
+auth:
+  mode: ${AUTH_MODE:-placeholder}  # NOT_IMPLEMENTED_YET

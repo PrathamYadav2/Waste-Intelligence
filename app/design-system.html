@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Design system</title>
+<link rel="stylesheet" href="styles/tokens.css"><link rel="stylesheet" href="styles/base.css"><link rel="stylesheet" href="styles/layout.css"><link rel="stylesheet" href="styles/components.css"></head>
+<body><main class="main"><h1>Design system</h1><p>Component reference. All values shown are placeholders, not results.</p>
+<div class="grid cols-2">
+<section class="card"><h3>Buttons</h3><button class="btn primary">Analyze waste</button> <button class="btn">Cancel</button> <button class="btn danger">Delete</button> <button class="btn" disabled>Disabled</button></section>
+<section class="card"><h3>Input</h3><div class="field"><label for="a">Region</label><input id="a" class="input" placeholder="Choose a region"><span class="hint">Optional</span></div><div class="field"><label for="b">Latitude</label><input id="b" class="input" aria-invalid="true" aria-describedby="be"><span class="hint" id="be">Enter a value between -90 and 90.</span></div></section>
+<section class="card"><h3>Component kinds</h3><span class="badge ml">ML</span> <span class="badge rule">Rule</span> <span class="badge scoring">Scoring</span> <span class="badge analytics">Analytics</span> <span class="badge todo">NOT_IMPLEMENTED_YET</span></section>
+<section class="card"><h3>Status</h3><span class="status ok">Connected</span><br><span class="status warn">Not verified</span><br><span class="status error">Failed</span><br><span class="status">Not configured</span></section>
+<section class="card"><h3>Confidence</h3><div class="confidence" style="--value:50%"><div>PLACEHOLDER 50%</div><div class="bar"><span></span></div></div></section>
+<section class="card"><h3>Recovery score</h3><div class="score-ring" style="--value:50" role="img" aria-label="Placeholder score"><span>PH</span></div></section>
+<section class="card priority-high"><h3>Recommendation card (high priority)</h3><p class="meta">PLACEHOLDER text. Explanation, route and trace appear here.</p></section>
+<section class="card"><h3>Recovery chain</h3><ol class="chain"><li data-state="done"><div class="step">Waste type</div><div class="value">PLACEHOLDER</div></li><li><div class="step">Route</div><div class="value">-</div></li></ol></section>
+</div></main></body></html>
+

@@ -1,0 +1,23 @@
+# Datasets & weights are external resources: never commit
+data/raw/*
+data/processed/*
+!data/processed/forecasts_2024_2027.csv
+data/external/*
+!data/**/.gitkeep
+models/**/*.pt
+models/**/*.pth
+!models/image_classifier/realwaste_mobilenet_v3.pth
+models/**/*.h5
+models/**/*.keras
+models/**/*.onnx
+models/**/*.pkl
+models/**/*.joblib
+*.zip
+.env
+__pycache__/
+.venv/
+.pytest_cache/
+*.sqlite3
+!waste_intelligence.db
+logs/
+Project Data/

@@ -1,0 +1,74 @@
+datasets:
+  realwaste:
+    path_env: REALWASTE_PATH
+    role: primary_training
+    adapter: src.data.adapters.RealWasteAdapter
+    classes:
+    - Cardboard
+    - Food Organics
+    - Glass
+    - Metal
+    - Miscellaneous Trash
+    - Paper
+    - Plastic
+    - Textile Trash
+    - Vegetation
+    image_count: 4752
+    folder_layout: class_subfolders
+  trashnet:
+    path_env: TRASHNET_PATH
+    role: secondary_evaluation
+    adapter: src.data.adapters.TrashNetAdapter
+    classes:
+    - glass
+    - paper
+    - cardboard
+    - plastic
+    - metal
+    - trash
+    image_count: 2527
+    folder_layout: class_subfolders
+  taco:
+    path_env: TACO_PATH
+    role: external_generalization
+    adapter: src.data.adapters.TacoAdapter
+    annotation_format: COCO
+    category_scheme: 60_classes_supercategories
+  regional:
+    path_env: REGIONAL_DATA_PATH
+    file: regional_waste_by_year.csv
+    role: forecasting
+    known:
+      rows: 96
+      regions: 12
+      observations_per_region: 8
+      approx_years: 2016-2023
+      target: gen_total_ulb_tpd
+    column_names:
+    - report_year
+    - region
+    - anchor_place
+    - latitude
+    - longitude
+    - gen_corporation_tpd
+    - gen_council_A_tpd
+    - gen_council_B_tpd
+    - gen_council_C_tpd
+    - gen_nagar_panchayat_tpd
+    - gen_cantonment_tpd
+    - gen_total_ulb_tpd
+    - treated_corporation_tpd
+    - treated_council_A_tpd
+    - treated_council_B_tpd
+    - treated_council_C_tpd
+    - treated_nagar_panchayat_tpd
+    - treated_cantonment_tpd
+    - treated_total_ulb_tpd
+    - treated_share_pct
+    - untreated_gap_tpd
+    - source_report
+    - notes
+  recovery_guidance:
+    path_env: RECOVERY_GUIDANCE_PATH
+    role: recovery_rules_reference
+    schema: json_mapped_to_9_realwaste_categories

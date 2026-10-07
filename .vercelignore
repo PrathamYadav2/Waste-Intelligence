@@ -1,0 +1,23 @@
+# Datasets (Prevent uploading heavy raw images to Vercel)
+Project Data/
+reports/
+tests/
+scripts/
+docs/
+
+# Python Cache & Environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# OS and Scripts
+*.bat
+*.sh
+.git/
+.gitignore
+.env.example

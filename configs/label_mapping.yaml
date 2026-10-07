@@ -1,0 +1,103 @@
+realwaste_to_trashnet:
+  Cardboard:
+    target: cardboard
+    status: VERIFIED
+  Glass:
+    target: glass
+    status: VERIFIED
+  Metal:
+    target: metal
+    status: VERIFIED
+  Paper:
+    target: paper
+    status: VERIFIED
+  Plastic:
+    target: plastic
+    status: VERIFIED
+  Miscellaneous Trash:
+    target: trash
+    status: VERIFIED
+  Food Organics:
+    target: null
+    status: UNMAPPED
+  Textile Trash:
+    target: null
+    status: UNMAPPED
+  Vegetation:
+    target: null
+    status: UNMAPPED
+realwaste_to_taco:
+  mapping:
+    Cardboard:
+    - Corrugated carton
+    - Egg carton
+    - Meal carton
+    - Other carton
+    - Pizza box
+    - Toilet tube
+    Food Organics:
+    - Food waste
+    Glass:
+    - Broken glass
+    - Glass bottle
+    - Glass cup
+    - Glass jar
+    Metal:
+    - Aerosol
+    - Aluminium blister pack
+    - Aluminium foil
+    - Drink can
+    - Food Can
+    - Metal bottle cap
+    - Metal lid
+    - Pop tab
+    - Scrap metal
+    Miscellaneous Trash:
+    - Battery
+    - Cigarette
+    - Rope & strings
+    - Shoe
+    - Unlabeled litter
+    Paper:
+    - Magazine paper
+    - Normal paper
+    - Paper bag
+    - Paper cup
+    - Paper straw
+    - Plastified paper bag
+    - Tissues
+    - Wrapping paper
+    Plastic:
+    - Clear plastic bottle
+    - Crisp packet
+    - Disposable food container
+    - Disposable plastic cup
+    - Foam cup
+    - Foam food container
+    - Garbage bag
+    - Other plastic
+    - Other plastic bottle
+    - Other plastic cup
+    - Other plastic wrapper
+    - Plastic bag & wrapper
+    - Plastic bottle cap
+    - Plastic film
+    - Plastic glooves
+    - Plastic lid
+    - Plastic straw
+    - Plastic utensils
+    - Polypropylene bag
+    - Single-use carrier bag
+    - Six pack rings
+    - Spread tub
+    - Squeezable tube
+    - Styrofoam piece
+    - Tupperware
+    Textile Trash: []
+    Vegetation: []
+  status: VERIFIED_COCO_TACO_MAP
+  evaluation_mode: single_object_or_dominant_crop
+cross_dataset_policy:
+  merge_datasets: false
+  report_unmapped_classes: true
+  evaluate_on_mapped_subset_only: true

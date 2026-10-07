@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Waste AI & Regional Decision Intelligence System</title>
+  
+  <!-- Modern Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-surface-elevated: #1a2234;
+      --border-subtle: #243049;
+      --border-focus: #3b82f6;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-tertiary: #64748b;
+      --accent-green: #10b981;
+      --accent-green-glow: rgba(16, 185, 129, 0.25);
+      --accent-blue: #3b82f6;
+      --accent-blue-glow: rgba(59, 130, 246, 0.25);
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #8b5cf6;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #10b981, #3b82f6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 15px var(--accent-green-glow);
+    }
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .brand-text p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Tabs Bar */
+    .tab-pills {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .tab-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Content Layout */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 28px;
+    }
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .page-title-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .page-title-banner h2 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .page-title-banner p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Grids & Cards */
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+    }
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+    }
+    .kpi-val {
+      font-size: 30px;
+      font-weight: 800;
+      color: #fff;
+      margin: 6px 0 2px 0;
+      font-family: var(--font-sans);
+    }
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .kpi-icon {
+      position: absolute;
+      right: 18px;
+      top: 20px;
+      font-size: 26px;
+      opacity: 0.7;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .grid-map-layout {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 10px var(--accent-green-glow);
+    }
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Tables */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .app-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .app-table th {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-tertiary);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .app-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(36, 48, 73, 0.5);
+      color: var(--text-primary);
+    }
+    .app-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .app-table th.num {
+      text-align: right;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .badge-high { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-med { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-low { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+
+    /* Single Photo Upload Dropzone */
+    .dropzone-container {
+      border: 2px dashed #334155;
+      border-radius: 12px;
+      padding: 36px 20px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.4);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dropzone-container:hover {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.04);
+    }
+    .dropzone-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+      color: #60a5fa;
+    }
+
+    /* Workflow Cards */
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .flow-step-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+    }
+    .flow-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .flow-step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .flow-step-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Map Box */
+    #map-box {
+      height: 520px;
+      border-radius: 10px;
+      z-index: 10;
+    }
+
+    .growth-up { color: #f87171; font-weight: 700; }
+    .growth-down { color: #34d399; font-weight: 700; }
+
+    /* Custom AI Engine Boxes */
+    .reco-tier-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .reco-tier-header {
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .impact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="brand-wrap">
+      <div class="brand-logo">♻️</div>
+      <div class="brand-text">
+        <h1>AI Waste Recovery Intelligence</h1>
+        <p>Maharashtra Municipal Decision Intelligence & PyTorch Vision</p>
+      </div>
+    </div>
+
+    <nav class="tab-pills">
+      <button class="tab-btn active" onclick="showTab('dashboard')">📊 Executive Overview</button>
+      <button class="tab-btn" onclick="showTab('scanner')">📷 AI Photo Scanner</button>
+      <button class="tab-btn" onclick="showTab('simulator')">🧠 AI Recommendation Engine</button>
+      <button class="tab-btn" onclick="showTab('workflow')">🔄 Recycling Workflow</button>
+      <button class="tab-btn" onclick="showTab('forecast')">📈 Waste Projections (2024–2027)</button>
+      <button class="tab-btn" onclick="showTab('map')">🗺️ Interactive Map</button>
+      <button class="tab-btn" onclick="showTab('regional')">🏢 District Analytics</button>
+    </nav>
+
+    <div class="live-status-pill">
+      <span class="status-dot"></span>
+      <span>API & ML Live (Port 8000)</span>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- ========================================================
+         TAB 1: EXECUTIVE OVERVIEW (CHARTS, PIE CHARTS, KPIS)
+         ======================================================== -->
+    <div id="tab-dashboard" class="tab-pane active">
+      <div class="page-title-banner">
+        <div>
+          <h2>Executive Smart City Dashboard</h2>
+          <p>Real-time analytics combining PyTorch computer vision with Maharashtra regional municipal Solid Waste records.</p>
+        </div>
+        <div style="font-size: 12px; color: var(--text-tertiary);">
+          State Baseline: <strong>2023 Maharashtra CPCB / MPCB Census</strong>
+        </div>
+      </div>
+
+      <!-- Top KPI Row -->
+      <div class="grid-kpi">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Daily Waste</div>
+          <div class="kpi-val" id="statTotalGen">23,267 <span style="font-size: 15px; font-weight: 500; color: var(--text-tertiary);">TPD</span></div>
+          <div class="kpi-sub">Across 12 major Maharashtra ULBs</div>
+          <div class="kpi-icon">🚛</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Processing & Treatment Share</div>
+          <div class="kpi-val" style="color: #34d399;" id="statTreatedShare">90.0%</div>
+          <div class="kpi-sub"><span style="color: #34d399;">20,950 TPD</span> treated / processed</div>
+          <div class="kpi-icon">⚙️</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Untreated Landfill Gap</div>
+          <div class="kpi-val" style="color: #f87171;" id="statUntreatedGap">2,317 <span style="font-size: 15px; font-weight: 500; color: var(--text-tertiary);">TPD</span></div>
+          <div class="kpi-sub">Direct disposal / capacity shortfall</div>
+          <div class="kpi-icon">⚠️</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">AI Vision Classifier</div>
+          <div class="kpi-val" style="color: #60a5fa;">78.26%</div>
+          <div class="kpi-sub">PyTorch MobileNetV3 (9 Classes)</div>
+          <div class="kpi-icon">🧠</div>
+        </div>
+      </div>
+
+      <!-- Charts Row 1: Pie Charts + Pressure Bar -->
+      <div class="grid-3" style="margin-bottom: 22px;">
+        <!-- Pie Chart 1: Treatment Share -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🥧 Waste Treatment Efficiency</div>
+            <span class="badge badge-low">Live 2023</span>
+          </div>
+          <div style="height: 240px; position: relative;">
+            <canvas id="pieTreatmentShare"></canvas>
+          </div>
+          <div style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 10px;">
+            Maharashtra state-wide treatment vs untreated deficit.
+          </div>
+        </div>
+
+        <!-- Pie Chart 2: Typical Waste Composition Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🍩 Waste Stream Composition</div>
+            <span class="badge badge-blue">CPCB Benchmark</span>
+          </div>
+          <div style="height: 240px; position: relative;">
+            <canvas id="pieComposition"></canvas>
+          </div>
+          <div style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 10px;">
+            Organic wet waste accounts for over half of total tonnage.
+          </div>
+        </div>
+
+        <!-- Top Critical Pressure Regions -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">⚡ High Waste Pressure Districts</div>
+            <span class="badge badge-high">Priority Index</span>
+          </div>
+          <div style="height: 240px;">
+            <canvas id="barPressureOverview"></canvas>
+          </div>
+          <div style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 10px;">
+            Calculated via untreated tonnage and treatment deficit.
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Scans & AI Decisions Ledger -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 Recent AI Waste Classifications & Statutory Recovery Log</div>
+          <button class="btn-primary" style="padding: 6px 14px; font-size: 12px;" onclick="showTab('scanner')">+ Scan Waste Photo</button>
+        </div>
+        <div class="table-responsive">
+          <table class="app-table" id="dashboardScansTable">
+            <thead>
+              <tr>
+                <th>Recommended Action</th>
+                <th>Material Route</th>
+                <th>Priority</th>
+                <th>Explainability (Grad-CAM)</th>
+                <th>Verification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="5" style="text-align: center; color: var(--text-tertiary);">Loading live logs from SQLite database...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 2: AI PHOTO SCANNER (WITH RECYCLING POTENTIAL & AI RECOMMENDATION)
+         ======================================================== -->
+    <div id="tab-scanner" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>AI Waste Vision Scanner & Real-Time Analysis</h2>
+          <p>Instant photo upload analysis using fine-tuned PyTorch MobileNetV3, Grad-CAM visual heatmaps, and deep recycling potential evaluation.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Photo Upload Box (Pure Photo Only) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📸 Upload Waste Photo</div>
+            <span class="badge badge-purple">Single-Click Analysis</span>
+          </div>
+
+          <div class="dropzone-container" onclick="document.getElementById('wastePhotoInput').click()">
+            <input type="file" id="wastePhotoInput" accept="image/*" style="display:none;" onchange="previewSelectedPhoto(event)">
+            <div id="dropzoneEmpty">
+              <div class="dropzone-icon">📥</div>
+              <div style="font-size: 16px; font-weight: 700; color: #fff;">Click to select or drag a waste photo here</div>
+              <div style="color: var(--text-tertiary); font-size: 13px; margin-top: 6px;">Supports JPG, PNG, WebP from camera or gallery</div>
+            </div>
+            <img id="photoPreviewImg" style="display:none; max-height: 260px; max-width: 100%; border-radius: 8px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.4);" />
+          </div>
+
+          <button id="btnAnalyzeWaste" class="btn-primary" style="width: 100%; margin-top: 18px; padding: 14px;" onclick="executePhotoAnalysis()">
+            ⚡ Analyze Photo with AI & Generate Grad-CAM
+          </button>
+        </div>
+
+        <!-- Analysis Results Box -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔍 AI Identification & Explainable AI (Grad-CAM)</div>
+            <span id="scanStatusBadge" class="badge badge-low">Ready</span>
+          </div>
+
+          <div id="scanEmptyPlaceholder" style="text-align: center; padding: 60px 20px; color: var(--text-tertiary);">
+            <div style="font-size: 36px; margin-bottom: 8px;">🔬</div>
+            <div>Upload any waste item photo on the left to see the PyTorch vision prediction, Grad-CAM visual heatmap, and recycling instructions.</div>
+          </div>
+
+          <div id="scanResultBox" style="display: none;">
+            <div style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 18px;">
+              <div style="text-align: center;">
+                <img id="gradcamResultOverlay" style="width: 170px; height: 170px; object-fit: cover; border-radius: 8px; border: 2px solid #38bdf8; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);" />
+                <div style="font-size: 11px; font-weight: 600; color: #38bdf8; margin-top: 6px;">Grad-CAM Heatmap</div>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-size: 11px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700;">Identified Class</div>
+                <div id="scanClassLabel" style="font-size: 26px; font-weight: 800; color: #34d399; letter-spacing: -0.01em;">-</div>
+                
+                <div style="margin-top: 6px; font-size: 13px;">
+                  Model Confidence: <strong id="scanConfidenceVal" style="color: #fff;">-</strong>
+                </div>
+                <div style="margin-top: 4px; font-size: 13px;">
+                  Detected Material: <span id="scanMaterialVal" style="color: var(--text-secondary);">-</span>
+                </div>
+                <div style="margin-top: 4px; font-size: 13px;">
+                  Recovery Score: <strong id="scanRecoveryScoreVal" style="color: #60a5fa;">-</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Top 5 Probabilities -->
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; margin-bottom: 14px;">
+              <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">Top Class Probabilities</div>
+              <div id="scanProbList"></div>
+            </div>
+
+            <!-- Recycling Potential Summary Strip -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+              <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 10px;">
+                <div style="font-size: 11px; color: var(--text-secondary);">Recyclability Index</div>
+                <div id="scanRecyclabilityIdx" style="font-size: 20px; font-weight: 800; color: #60a5fa;">-</div>
+                <div id="scanGradeLabel" style="font-size: 11px; color: var(--text-tertiary);">-</div>
+              </div>
+              <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px;">
+                <div style="font-size: 11px; color: var(--text-secondary);">Market Scrap Value</div>
+                <div id="scanScrapRate" style="font-size: 20px; font-weight: 800; color: #34d399;">-</div>
+                <div style="font-size: 11px; color: var(--text-tertiary);">Indian Secondary Market</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IN-DEPTH RECYCLING POTENTIAL & AI RECOMMENDATION PANELS (SHOWS AFTER SCAN) -->
+      <div id="scanDeepAnalysisPanel" style="display: none; margin-top: 24px;">
+        <div class="grid-2">
+          
+          <!-- Panel A: Deep Recycling Potential Analysis -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🔬 Deep Recycling Potential Analysis</div>
+              <span class="badge badge-low" id="scanViabilityBadge">High Viability</span>
+            </div>
+            <div style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+              <div class="reco-tier-box">
+                <div class="reco-tier-header" style="color: #60a5fa;">🔄 Material Lifecycle & Degradation Risk</div>
+                <div id="scanLifecycleLoops" style="color: var(--text-primary); font-weight: 600;">-</div>
+                <div style="margin-top: 4px; font-size: 12px;">Downcycling Risk: <span id="scanDowncyclingRisk" style="color: #cbd5e1;">-</span></div>
+              </div>
+
+              <div class="reco-tier-box">
+                <div class="reco-tier-header" style="color: #34d399;">⚙️ Industrial Processing Method</div>
+                <div id="scanProcessingMethod" style="color: var(--text-primary); font-size: 12px; font-family: var(--font-mono); background: rgba(0,0,0,0.25); padding: 8px; border-radius: 6px;">-</div>
+                <div style="margin-top: 6px; font-size: 12px;">Contamination Sensitivity: <strong id="scanContamSensitivity" style="color: #f59e0b;">-</strong></div>
+              </div>
+
+              <div class="reco-tier-box">
+                <div class="reco-tier-header" style="color: #c084fc;">🏭 Target Buyer Industries</div>
+                <div id="scanBuyerIndustries" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel B: AI Recommendation Engine -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🧠 AI Multi-Tier Recommendation Engine</div>
+              <span class="badge badge-purple">Synthesized AI Strategy</span>
+            </div>
+            
+            <div class="reco-tier-box" style="border-left: 3px solid #3b82f6;">
+              <div class="reco-tier-header" style="color: #60a5fa;">🏠 Citizen Action Protocol (Immediate)</div>
+              <ul id="scanCitizenProtocolList" style="margin-left: 18px; font-size: 13px; color: var(--text-secondary); line-height: 1.5;"></ul>
+            </div>
+
+            <div class="reco-tier-box" style="border-left: 3px solid #10b981;">
+              <div class="reco-tier-header" style="color: #34d399;">🏭 Municipal MRF Facility Routing</div>
+              <div id="scanMrfActionText" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">-</div>
+            </div>
+
+            <div class="reco-tier-box" style="border-left: 3px solid #f59e0b;">
+              <div class="reco-tier-header" style="color: #fbbf24;">🔄 Circular Economy & EPR Offtake</div>
+              <div id="scanCircularDemandText" style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">-</div>
+            </div>
+
+            <!-- Environmental Impact Strip -->
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 12px; margin-top: 14px;">
+              <div style="font-size: 12px; font-weight: 700; color: #34d399; margin-bottom: 6px;">🌿 Environmental & Climate Offset (Per Unit):</div>
+              <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                <span class="impact-pill" id="scanPillEnergy">⚡ Energy Saved: -</span>
+                <span class="impact-pill" id="scanPillCo2">🌱 CO₂ Offset: -</span>
+                <span class="impact-pill" id="scanPillWater">💧 Water Saved: -</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 3: AI RECOMMENDATION SIMULATOR & CIRCULAR CALCULATOR
+         ======================================================== -->
+    <div id="tab-simulator" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>AI Recommendation Engine & Circular Economy Simulator</h2>
+          <p>Interactive tool to calculate material recovery values, citizen protocols, carbon offsets, and municipal logistics for any waste category.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Input Form -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🎛️ Simulation Parameters</div>
+            <span class="badge badge-blue">Dynamic Engine</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Waste Category</label>
+              <select id="simWasteClass" style="width: 100%; padding: 10px; background: var(--bg-surface-elevated); color: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; margin-top: 6px; font-size: 14px; font-weight: 600;">
+                <option value="Cardboard">Cardboard (Corrugated Fibreboard)</option>
+                <option value="Plastic" selected>Plastic (PET / HDPE / PP Resins)</option>
+                <option value="Metal">Metal (Aluminium UBC / Steel Alloys)</option>
+                <option value="Glass">Glass (Soda-Lime Container Cullet)</option>
+                <option value="Food Organics">Food Organics (Wet Biodegradable)</option>
+                <option value="Paper">Paper (Cellulose White / Newsprint)</option>
+                <option value="Vegetation">Vegetation (Horticultural Green Waste)</option>
+                <option value="Textile Trash">Textile Trash (Cotton & Synthetic Blends)</option>
+                <option value="Miscellaneous Trash">Miscellaneous Trash (MLP / Inerts)</option>
+              </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div>
+                <label style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Batch Weight (KG)</label>
+                <input type="number" id="simWeightKg" value="50" min="1" max="10000" style="width: 100%; padding: 10px; background: var(--bg-surface-elevated); color: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; margin-top: 6px; font-size: 14px; font-weight: 600;" />
+              </div>
+              <div>
+                <label style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Material Condition</label>
+                <select id="simCondition" style="width: 100%; padding: 10px; background: var(--bg-surface-elevated); color: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; margin-top: 6px; font-size: 14px;">
+                  <option value="clean">Clean & Dry (Grade 1)</option>
+                  <option value="dirty">Damp / Soiled (Grade 2)</option>
+                  <option value="greasy">Food Contaminated (Grade 3)</option>
+                  <option value="damaged">Damaged / Broken</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-primary" style="margin-top: 8px; padding: 14px;" onclick="runSimulation()">
+              ⚡ Run AI Recommendation Engine Simulation
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulation Results -->
+        <div class="card" id="simResultPanel">
+          <div class="card-header">
+            <div class="card-title">📊 Simulated AI Recommendation & Impact</div>
+            <span id="simRecRouteBadge" class="badge badge-low">RECYCLE</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div style="background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px;">
+              <div style="font-size: 11px; color: var(--text-secondary);">Est. Scrap Market Return</div>
+              <div id="simScrapValueText" style="font-size: 22px; font-weight: 800; color: #34d399;">Rs. 1,300 – 1,900</div>
+              <div id="simRatePerKg" style="font-size: 11px; color: var(--text-tertiary);">@ Rs. 26 - 38 / kg</div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px;">
+              <div style="font-size: 11px; color: var(--text-secondary);">Total CO₂ Emissions Saved</div>
+              <div id="simTotalCo2Text" style="font-size: 22px; font-weight: 800; color: #60a5fa;">90.0 kg CO₂e</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">Direct Landfill Diversion</div>
+            </div>
+          </div>
+
+          <div class="reco-tier-box">
+            <div class="reco-tier-header" style="color: #38bdf8;">🧠 Recommended Core Action:</div>
+            <div id="simCoreActionText" style="font-size: 13px; color: var(--text-primary); font-weight: 600;">-</div>
+          </div>
+
+          <div class="reco-tier-box">
+            <div class="reco-tier-header" style="color: #34d399;">🏠 Citizen Handling Steps:</div>
+            <ul id="simCitizenList" style="margin-left: 18px; font-size: 12px; color: var(--text-secondary); line-height: 1.5;"></ul>
+          </div>
+
+          <div class="reco-tier-box">
+            <div class="reco-tier-header" style="color: #fbbf24;">🏭 Municipal Facility Directive:</div>
+            <div id="simMrfDirectiveText" style="font-size: 12px; color: var(--text-secondary);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 4: RECYCLING WORKFLOW & EXECUTION GUIDE
+         ======================================================== -->
+    <div id="tab-workflow" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>End-to-End Waste Recycling Workflow</h2>
+          <p>Standard Operating Procedure (SOP) based on Solid Waste Management (SWM) 2016 Rules and circular economy best practices.</p>
+        </div>
+      </div>
+
+      <!-- 5-Step Pipeline Cards -->
+      <div class="flow-steps">
+        <div class="flow-step-card">
+          <div class="flow-num">1</div>
+          <div class="flow-step-title">Source Segregation</div>
+          <div class="flow-step-desc">
+            Segregate at origin into 3 distinct color-coded bins:
+            <ul style="margin: 8px 0 0 16px; font-size: 11px;">
+              <li><strong style="color:#10b981;">Green Bin:</strong> Wet / Biodegradable</li>
+              <li><strong style="color:#3b82f6;">Blue Bin:</strong> Dry Recyclables</li>
+              <li><strong style="color:#ef4444;">Red/Black:</strong> Domestic Hazardous</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flow-step-card">
+          <div class="flow-num">2</div>
+          <div class="flow-step-title">Citizen Pre-Cleaning</div>
+          <div class="flow-step-desc">
+            Divert contamination:
+            <ul style="margin: 8px 0 0 16px; font-size: 11px;">
+              <li>Rinse milk pouches & food cans</li>
+              <li>Flatten cardboard cartons to save 70% bin volume</li>
+              <li>Keep dry paper away from oil/moisture</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flow-step-card">
+          <div class="flow-num">3</div>
+          <div class="flow-step-title">Decentralized MRF</div>
+          <div class="flow-step-desc">
+            Primary sorting at Material Recovery Facility:
+            <ul style="margin: 8px 0 0 16px; font-size: 11px;">
+              <li>Trommel screens for size separation</li>
+              <li>Magnetic cross-belt separators for ferrous metals</li>
+              <li>Baling machines for transport efficiency</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flow-step-card">
+          <div class="flow-num">4</div>
+          <div class="flow-step-title">Industrial Processing</div>
+          <div class="flow-step-desc">
+            Specialized recovery pipelines:
+            <ul style="margin: 8px 0 0 16px; font-size: 11px;">
+              <li><strong>Plastics:</strong> Shredded, washed, melted into PCR granules</li>
+              <li><strong>Organics:</strong> Biomethanation into CNG & bio-fertilizer</li>
+              <li><strong>Glass/Metals:</strong> Smelted into reusable ingots</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flow-step-card">
+          <div class="flow-num">5</div>
+          <div class="flow-step-title">Circular Economy</div>
+          <div class="flow-step-desc">
+            Secondary raw materials sent directly to certified manufacturers to eliminate landfill dependency and reduce carbon emissions.
+          </div>
+        </div>
+      </div>
+
+      <!-- Material Specific Breakdown -->
+      <div class="grid-2" style="margin-top: 24px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🧴 Plastic & Dry Waste Detailed Protocol</div>
+            <span class="badge badge-blue">Blue Stream</span>
+          </div>
+          <div style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+            <p><strong style="color: #fff;">1. PET Bottles:</strong> Remove bottle cap (HDPE), crush body, transport to mechanical shredder. Flakes washed at 85°C caustic bath to remove adhesives.</p>
+            <p style="margin-top: 8px;"><strong style="color: #fff;">2. Cardboard & Kraft Paper:</strong> Hydrapulped in water to separate fibers, screened through centrifugal cleaners, and pressed into heavy recycled paperboard sheets.</p>
+            <p style="margin-top: 8px;"><strong style="color: #fff;">3. Aluminium & Cans:</strong> De-coated and melted at 660°C. Requires 95% less energy than refining primary bauxite ore.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🌿 Wet Waste & Biomethanation Protocol</div>
+            <span class="badge badge-low">Green Stream</span>
+          </div>
+          <div style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+            <p><strong style="color: #fff;">1. Food Organics:</strong> Processed via anaerobic digestion in decentralized biomethanation digesters. 1 tonne wet waste generates ~80-100 m³ biogas.</p>
+            <p style="margin-top: 8px;"><strong style="color: #fff;">2. Garden & Horticultural Waste:</strong> Chipped and used as bulking agent in aerated windrow composting. Reaches 55°C thermophilic phase to destroy pathogens.</p>
+            <p style="margin-top: 8px;"><strong style="color: #fff;">3. Output Utilization:</strong> Certified compost enriched with nitrogen and enriched bio-gas piped for clean cooking fuel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 5: WASTE PROJECTIONS (CLEAR INCREASE/DECREASE SPECIFIED, NO MODEL COL)
+         ======================================================== -->
+    <div id="tab-forecast" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>ML Regional Waste Projections (2024–2027)</h2>
+          <p>Calculated using damped trend regression validated across 2020–2023 holdout years. Clearly specifying exact 4-year growth rates.</p>
+        </div>
+        <div>
+          <select id="forecastSelectRegion" onchange="renderForecastDetailChart()" style="padding: 8px 14px; background: var(--bg-surface-elevated); color: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; font-weight: 600;">
+            <option value="Pune" selected>Pune (High Growth)</option>
+            <option value="Mumbai">Mumbai (Decline Trajectory)</option>
+            <option value="Nashik">Nashik</option>
+            <option value="Thane">Thane</option>
+            <option value="Nagpur">Nagpur</option>
+            <option value="Aurangabad">Aurangabad</option>
+            <option value="Raigad">Raigad</option>
+            <option value="Kalyan">Kalyan</option>
+            <option value="Amravati">Amravati</option>
+            <option value="Kolhapur">Kolhapur</option>
+            <option value="Chandrapur">Chandrapur</option>
+            <option value="Navi Mumbai">Navi Mumbai</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Line Graph Card -->
+      <div class="card" style="margin-bottom: 22px;">
+        <div class="card-header">
+          <div class="card-title">📈 Historical vs Projected Waste Trajectory (2016–2027)</div>
+          <span class="badge badge-blue">Blue: Historical | Green: Projected</span>
+        </div>
+        <div style="height: 320px;">
+          <canvas id="forecastLineChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Projections Ledger (MODEL COLUMN REMOVED, CLEAR GROWTH RATES SPECIFIED) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 2024–2027 District Projections & Expected Growth Ledger</div>
+          <span class="badge badge-purple">4-Year Outlook</span>
+        </div>
+        <div class="table-responsive">
+          <table class="app-table" id="projectionsLedgerTable">
+            <thead>
+              <tr>
+                <th>Region</th>
+                <th class="num">2023 Baseline (TPD)</th>
+                <th class="num">2024 Forecast</th>
+                <th class="num">2025 Forecast</th>
+                <th class="num">2026 Forecast</th>
+                <th class="num">2027 Forecast</th>
+                <th class="num">Expected Net Change (by 2027)</th>
+                <th class="num">Growth Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="8" style="text-align: center;">Loading forecast calculations...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 6: INTERACTIVE MAP (WITH DETAILED CLICK INSPECTOR)
+         ======================================================== -->
+    <div id="tab-map" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>Interactive Maharashtra Waste Map</h2>
+          <p>Click on any district marker to inspect full municipal metrics, treatment deficit, and smart city interventions.</p>
+        </div>
+      </div>
+
+      <div class="grid-map-layout">
+        <!-- Map Canvas -->
+        <div class="card" style="padding: 12px;">
+          <div id="map-box"></div>
+        </div>
+
+        <!-- District Inspector Panel (Updates on Click) -->
+        <div class="card" id="mapDetailPanel">
+          <div class="card-header">
+            <div class="card-title" id="mapSelectedRegionName">📍 Pune Municipal Corporation</div>
+            <span id="mapSelectedPressureBadge" class="badge badge-low">Low Pressure</span>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-tertiary); font-weight: 700;">District Status & Generation</div>
+            <div style="display: flex; gap: 14px; margin-top: 8px;">
+              <div style="flex: 1; background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px;">
+                <div style="font-size: 11px; color: var(--text-secondary);">2023 Generation</div>
+                <div id="mapDetailGen" style="font-size: 22px; font-weight: 800; color: #fff;">4,440 TPD</div>
+              </div>
+              <div style="flex: 1; background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px;">
+                <div style="font-size: 11px; color: var(--text-secondary);">Untreated Gap</div>
+                <div id="mapDetailGap" style="font-size: 22px; font-weight: 800; color: #f87171;">479 TPD</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 16px; background: var(--bg-surface-elevated); padding: 14px; border-radius: 8px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">Key Performance Indicators:</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+              <div>• Treatment Rate: <strong id="mapDetailRate" style="color: #34d399;">89.2%</strong></div>
+              <div>• Priority Rank: <strong id="mapDetailRank" style="color: #60a5fa;">#3</strong></div>
+              <div>• 2024 Forecast: <strong id="mapDetailFc24">4,510 TPD</strong></div>
+              <div>• 2027 Projection: <strong id="mapDetailFc27">4,723 TPD</strong></div>
+            </div>
+          </div>
+
+          <div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 14px; border-radius: 6px;">
+            <div style="font-size: 12px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">Recommended Municipal Action</div>
+            <div id="mapDetailRecommendation" style="color: #e2e8f0; font-size: 13px; margin-top: 4px; line-height: 1.5;">
+              Expand decentralized biomethanation capacity by 250 TPD across residential societies and set up mechanical sorting line for dry recyclables.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 7: REGIONAL DISTRICT ANALYTICS
+         ======================================================== -->
+    <div id="tab-regional" class="tab-pane">
+      <div class="page-title-banner">
+        <div>
+          <h2>Maharashtra Regional Waste Intelligence</h2>
+          <p>Full audited records of solid waste generation and treatment across all 12 urban clusters.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 22px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📊 2023 Municipal Waste Generation by Region (TPD)</div>
+          </div>
+          <div style="height: 300px;">
+            <canvas id="regionalGenChartFull"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🛡️ Treatment Volume vs Landfill Deficit</div>
+          </div>
+          <div style="height: 300px;">
+            <canvas id="regionalTreatedChartFull"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🏢 State Waste Registry & Pressure Indices</div>
+        </div>
+        <div class="table-responsive">
+          <table class="app-table" id="regionalFullLedgerTable">
+            <thead>
+              <tr>
+                <th>Region</th>
+                <th class="num">2023 Generation (TPD)</th>
+                <th class="num">Treated (TPD)</th>
+                <th class="num">Untreated Gap (TPD)</th>
+                <th class="num">Treatment Rate</th>
+                <th>Pressure Level</th>
+                <th class="num">Priority Rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="7" style="text-align: center;">Loading regional records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ========================================================
+       APPLICATION JAVASCRIPT LOGIC
+       ======================================================== -->
+  <script>
+    // Tab switching
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => {
+        if (b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
+      });
+
+      if (tabId === 'map' && window.leafletMapInstance) {
+        setTimeout(() => window.leafletMapInstance.invalidateSize(), 200);
+      }
+    }
+
+    // State Variables
+    let regionalOverview = null;
+    let forecastList = null;
+    let mapDataFeatures = null;
+
+    // Charts references
+    let chartPieTreatment = null;
+    let chartPieComp = null;
+    let chartBarPressure = null;
+    let chartForecastLine = null;
+    let chartRegGenFull = null;
+    let chartRegTreatedFull = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchAllData();
+      renderDashboardCharts();
+      renderProjectionsLedger();
+      renderRegionalAnalytics();
+      initInteractiveMap();
+      runSimulation(); // initialize simulator with defaults
+    });
+
+    async function fetchAllData() {
+      try {
+        const [resOverview, resForecast, resMap, resRecs] = await Promise.all([
+          fetch('/api/v1/regional/overview'),
+          fetch('/api/v1/forecast'),
+          fetch('/api/v1/map'),
+          fetch('/api/v1/recommendations?page_size=6')
+        ]);
+
+        regionalOverview = await resOverview.json();
+        forecastList = await resForecast.json();
+        mapDataFeatures = await resMap.json();
+        const recsData = await resRecs.json();
+
+        // Render recent scans
+        const recBody = document.querySelector('#dashboardScansTable tbody');
+        if (recsData.items && recsData.items.length > 0) {
+          recBody.innerHTML = recsData.items.map(it => `
+            <tr>
+              <td><strong>${it.action}</strong></td>
+              <td><span class="badge badge-blue">${it.route.toUpperCase()}</span></td>
+              <td><span class="badge ${it.priority === 'high' ? 'badge-high' : 'badge-med'}">${it.priority.toUpperCase()}</span></td>
+              <td><span style="color: #34d399; font-weight:600;">✓ Backpropagated</span></td>
+              <td><span class="badge badge-low">Verified</span></td>
+            </tr>
+          `).join('');
+        }
+
+      } catch (err) {
+        console.error('Data fetch error:', err);
+      }
+    }
+
+    // 1. Dashboard Charts (Pie Charts + Pressure)
+    function renderDashboardCharts() {
+      if (!regionalOverview || !regionalOverview.regions) return;
+
+      const totalGen = regionalOverview.regions.reduce((acc, r) => acc + r.generation_tpd, 0);
+      const totalTreated = regionalOverview.regions.reduce((acc, r) => acc + (r.treated_tpd || 0), 0);
+      const totalGap = regionalOverview.regions.reduce((acc, r) => acc + (r.untreated_gap_tpd || 0), 0);
+
+      document.getElementById('statTotalGen').innerHTML = `${Math.round(totalGen).toLocaleString()} <span style="font-size: 15px; font-weight: 500; color: var(--text-tertiary);">TPD</span>`;
+      document.getElementById('statTreatedShare').innerText = `${((totalTreated / totalGen) * 100).toFixed(1)}%`;
+      document.getElementById('statUntreatedGap').innerHTML = `${Math.round(totalGap).toLocaleString()} <span style="font-size: 15px; font-weight: 500; color: var(--text-tertiary);">TPD</span>`;
+
+      // Pie 1: Treatment Share
+      const ctxPie1 = document.getElementById('pieTreatmentShare').getContext('2d');
+      chartPieTreatment = new Chart(ctxPie1, {
+        type: 'doughnut',
+        data: {
+          labels: ['Treated & Processed', 'Untreated Landfill Gap'],
+          datasets: [{
+            data: [totalTreated, totalGap],
+            backgroundColor: ['#10b981', '#ef4444'],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 11 } } }
+          },
+          cutout: '65%'
+        }
+      });
+
+      // Pie 2: Municipal Stream Composition (CPCB Standard)
+      const ctxPie2 = document.getElementById('pieComposition').getContext('2d');
+      chartPieComp = new Chart(ctxPie2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Organic Wet Waste (54%)', 'Dry Recyclables (27%)', 'Combustible / RDF (11%)', 'Inert Silt (8%)'],
+          datasets: [{
+            data: [54, 27, 11, 8],
+            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#64748b'],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 } } }
+          },
+          cutout: '65%'
+        }
+      });
+
+      // Bar Chart: Pressure Overview
+      const sortedByPressure = [...regionalOverview.regions].sort((a,b) => b.pressure_index - a.pressure_index).slice(0, 6);
+      const ctxBar = document.getElementById('barPressureOverview').getContext('2d');
+      chartBarPressure = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: sortedByPressure.map(r => r.region),
+          datasets: [{
+            label: 'Pressure Index (0–100)',
+            data: sortedByPressure.map(r => r.pressure_index),
+            backgroundColor: sortedByPressure.map(r => r.pressure_index > 40 ? '#ef4444' : (r.pressure_index > 30 ? '#f59e0b' : '#10b981')),
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { max: 100, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+    }
+
+    // 2. Projections Ledger (Specified Exact Increase/Decrease, No Model Col)
+    function renderProjectionsLedger() {
+      if (!forecastList || !regionalOverview) return;
+
+      const pivot = {};
+      forecastList.forecasts.forEach(f => {
+        if (!pivot[f.region]) pivot[f.region] = {};
+        pivot[f.region][f.forecast_year] = f;
+      });
+
+      const baseMap = {};
+      regionalOverview.regions.forEach(r => {
+        baseMap[r.region] = r.generation_tpd;
+      });
+
+      const tbody = document.querySelector('#projectionsLedgerTable tbody');
+      tbody.innerHTML = Object.keys(pivot).map(reg => {
+        const base23 = baseMap[reg] || 0;
+        const fc24 = pivot[reg][2024]?.predicted_gen_total_ulb_tpd || 0;
+        const fc25 = pivot[reg][2025]?.predicted_gen_total_ulb_tpd || 0;
+        const fc26 = pivot[reg][2026]?.predicted_gen_total_ulb_tpd || 0;
+        const fc27 = pivot[reg][2027]?.predicted_gen_total_ulb_tpd || 0;
+
+        const delta = fc27 - base23;
+        const pct = base23 > 0 ? (delta / base23) * 100 : 0;
+        const annualRate = delta / 4;
+
+        const isPositive = delta > 0;
+        const changeClass = isPositive ? 'growth-up' : 'growth-down';
+        const sign = isPositive ? '+' : '';
+        const arrow = isPositive ? '↗' : '↘';
+
+        return `
+          <tr>
+            <td><strong>${reg}</strong></td>
+            <td class="num">${base23.toFixed(1)}</td>
+            <td class="num">${fc24.toFixed(1)}</td>
+            <td class="num">${fc25.toFixed(1)}</td>
+            <td class="num">${fc26.toFixed(1)}</td>
+            <td class="num"><strong>${fc27.toFixed(1)}</strong></td>
+            <td class="num"><span class="${changeClass}">${sign}${delta.toFixed(1)} TPD (${sign}${pct.toFixed(1)}%) ${arrow}</span></td>
+            <td class="num"><span class="${changeClass}">${sign}${annualRate.toFixed(1)} TPD/yr</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      renderForecastDetailChart();
+    }
+
+    async function renderForecastDetailChart() {
+      const region = document.getElementById('forecastSelectRegion').value;
+      const res = await fetch(`/api/v1/regional/${region}`);
+      const d = await res.json();
+
+      const histLabels = d.history.map(h => String(h.year));
+      const histValues = d.history.map(h => h.generation_tpd);
+
+      const fcLabels = d.forecasts.map(f => String(f.year));
+      const fcValues = d.forecasts.map(f => f.predicted_tpd);
+
+      const allLabels = [...histLabels, ...fcLabels];
+      const seriesHist = [...histValues, ...fcLabels.map(() => null)];
+      const seriesFc = [...histLabels.slice(0, -1).map(() => null), histValues[histValues.length-1], ...fcValues];
+
+      const ctx = document.getElementById('forecastLineChart').getContext('2d');
+      if (chartForecastLine) chartForecastLine.destroy();
+
+      chartForecastLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: allLabels,
+          datasets: [
+            {
+              label: 'Historical Data (2016-2023)',
+              data: seriesHist,
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.12)',
+              fill: true,
+              tension: 0.2,
+              pointRadius: 4
+            },
+            {
+              label: 'ML Projected Waste (2024-2027)',
+              data: seriesFc,
+              borderColor: '#10b981',
+              borderDash: [6, 4],
+              backgroundColor: 'rgba(16, 185, 129, 0.12)',
+              fill: true,
+              tension: 0.2,
+              pointRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#94a3b8' } } },
+          scales: {
+            y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+    }
+
+    // 3. Interactive Map with Detailed Marker Click Inspector
+    function initInteractiveMap() {
+      const map = L.map('map-box').setView([19.25, 75.5], 7);
+      window.leafletMapInstance = map;
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      if (!mapDataFeatures || !mapDataFeatures.features) return;
+
+      mapDataFeatures.features.forEach(f => {
+        const color = f.pressure_category === 'High' ? '#ef4444' : (f.pressure_category === 'Medium' ? '#f59e0b' : '#10b981');
+        const marker = L.circleMarker([f.latitude, f.longitude], {
+          radius: Math.max(7, Math.min(24, Math.sqrt(f.current_generation_tpd) / 3.8)),
+          fillColor: color,
+          color: '#ffffff',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.85
+        }).addTo(map);
+
+        marker.on('click', () => {
+          inspectDistrictOnMap(f);
+        });
+
+        marker.bindPopup(`
+          <div style="font-family:sans-serif; color:#0f172a; padding:4px;">
+            <h4 style="margin:0 0 4px 0; font-weight:700;">${f.region}</h4>
+            <div>Generation: <strong>${f.current_generation_tpd} TPD</strong></div>
+            <div>Pressure: <strong>${f.pressure_index}/100 (${f.pressure_category})</strong></div>
+            <div style="margin-top:4px; font-size:11px; color:#3b82f6; font-weight:600;">Click marker for full smart city plan →</div>
+          </div>
+        `);
+      });
+
+      const pune = mapDataFeatures.features.find(x => x.region === 'Pune');
+      if (pune) inspectDistrictOnMap(pune);
+    }
+
+    async function inspectDistrictOnMap(feature) {
+      document.getElementById('mapSelectedRegionName').innerText = `📍 ${feature.region} Municipal Corporation`;
+      const badge = document.getElementById('mapSelectedPressureBadge');
+      badge.innerText = `${feature.pressure_category} Pressure (${feature.pressure_index}/100)`;
+      badge.className = `badge ${feature.pressure_category === 'High' ? 'badge-high' : (feature.pressure_category === 'Medium' ? 'badge-med' : 'badge-low')}`;
+
+      document.getElementById('mapDetailGen').innerText = `${feature.current_generation_tpd.toFixed(0)} TPD`;
+      document.getElementById('mapDetailRank').innerText = `#${feature.priority_rank}`;
+      document.getElementById('mapDetailFc24').innerText = `${feature.forecast_2024_tpd?.toFixed(0) || '-'} TPD`;
+
+      try {
+        const res = await fetch(`/api/v1/regional/${feature.region}`);
+        const d = await res.json();
+        const latest = d.history[d.history.length - 1];
+        const gap = latest.untreated_gap_tpd || 0;
+        const treated = latest.treated_tpd || 0;
+        const rate = latest.generation_tpd > 0 ? ((treated / latest.generation_tpd) * 100).toFixed(1) : 'N/A';
+        const fc27 = d.forecasts[d.forecasts.length - 1]?.predicted_tpd || 0;
+
+        document.getElementById('mapDetailGap').innerText = `${gap.toFixed(0)} TPD`;
+        document.getElementById('mapDetailRate').innerText = `${rate}%`;
+        document.getElementById('mapDetailFc27').innerText = `${fc27.toFixed(0)} TPD`;
+
+        let actionMsg = `Augment decentralized MRF facilities by 150 TPD. Implement automated optical sorting for dry waste and expand biomethanation.`;
+        if (gap > 400) {
+          actionMsg = `CRITICAL DEFICIT: Establish new 350 TPD Waste-to-Energy / Refuse Derived Fuel (RDF) facility and expand mandatory door-to-door source segregation.`;
+        } else if (gap < 100) {
+          actionMsg = `HIGH EFFICIENCY: Sustain 95%+ treatment rate through decentralized colony-level compost pits and extended producer responsibility (EPR) dry recycling.`;
+        }
+        document.getElementById('mapDetailRecommendation').innerText = actionMsg;
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // 4. Regional District Analytics
+    function renderRegionalAnalytics() {
+      if (!regionalOverview || !regionalOverview.regions) return;
+
+      const tbody = document.querySelector('#regionalFullLedgerTable tbody');
+      tbody.innerHTML = regionalOverview.regions.map(r => {
+        const rate = r.generation_tpd > 0 ? (((r.treated_tpd || 0) / r.generation_tpd) * 100).toFixed(1) : '-';
+        return `
+          <tr>
+            <td><strong>${r.region}</strong></td>
+            <td class="num">${r.generation_tpd.toFixed(1)}</td>
+            <td class="num">${r.treated_tpd ? r.treated_tpd.toFixed(1) : '-'}</td>
+            <td class="num">${r.untreated_gap_tpd ? r.untreated_gap_tpd.toFixed(1) : '-'}</td>
+            <td class="num"><strong>${rate}%</strong></td>
+            <td><span class="badge ${r.pressure_category === 'High' ? 'badge-high' : (r.pressure_category === 'Medium' ? 'badge-med' : 'badge-low')}">${r.pressure_category}</span></td>
+            <td class="num">#${r.priority_rank}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const ctxGen = document.getElementById('regionalGenChartFull').getContext('2d');
+      chartRegGenFull = new Chart(ctxGen, {
+        type: 'bar',
+        data: {
+          labels: regionalOverview.regions.map(r => r.region),
+          datasets: [{
+            label: '2023 Waste Generation (TPD)',
+            data: regionalOverview.regions.map(r => r.generation_tpd),
+            backgroundColor: '#3b82f6',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#94a3b8' } } },
+          scales: {
+            y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+
+      const ctxTreated = document.getElementById('regionalTreatedChartFull').getContext('2d');
+      chartRegTreatedFull = new Chart(ctxTreated, {
+        type: 'bar',
+        data: {
+          labels: regionalOverview.regions.map(r => r.region),
+          datasets: [
+            {
+              label: 'Treated (TPD)',
+              data: regionalOverview.regions.map(r => r.treated_tpd || 0),
+              backgroundColor: '#10b981',
+              borderRadius: 6
+            },
+            {
+              label: 'Untreated Gap (TPD)',
+              data: regionalOverview.regions.map(r => r.untreated_gap_tpd || 0),
+              backgroundColor: '#ef4444',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#94a3b8' } } },
+          scales: {
+            y: { stacked: true, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+            x: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+    }
+
+    // 5. AI Photo Scanner (Pure Photo Upload & Deep Recycling Analysis)
+    let chosenPhotoFile = null;
+
+    function previewSelectedPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        chosenPhotoFile = file;
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById('dropzoneEmpty').style.display = 'none';
+          const img = document.getElementById('photoPreviewImg');
+          img.src = e.target.result;
+          img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function executePhotoAnalysis() {
+      if (!chosenPhotoFile) {
+        alert('Please choose or drag a waste photo first.');
+        return;
+      }
+
+      const btn = document.getElementById('btnAnalyzeWaste');
+      btn.disabled = true;
+      btn.innerText = '⏳ Running PyTorch MobileNetV3 & Grad-CAM...';
+      document.getElementById('scanStatusBadge').innerText = 'Analyzing...';
+      document.getElementById('scanStatusBadge').className = 'badge badge-med';
+
+      const formData = new FormData();
+      formData.append('image', chosenPhotoFile);
+
+      try {
+        const resp = await fetch('/api/v1/waste/analyze', { method: 'POST', body: formData });
+        if (!resp.ok) throw new Error('Inference request failed');
+        const data = await resp.json();
+
+        // Reveal Results
+        document.getElementById('scanEmptyPlaceholder').style.display = 'none';
+        document.getElementById('scanResultBox').style.display = 'block';
+        document.getElementById('scanDeepAnalysisPanel').style.display = 'block';
+        document.getElementById('scanStatusBadge').innerText = 'Analyzed';
+        document.getElementById('scanStatusBadge').className = 'badge badge-low';
+
+        // Populate Vision predictions
+        document.getElementById('gradcamResultOverlay').src = data.explainability.overlay_base64;
+        document.getElementById('scanClassLabel').innerText = data.classification.label;
+        document.getElementById('scanConfidenceVal').innerText = (data.classification.confidence * 100).toFixed(1) + '%';
+        document.getElementById('scanMaterialVal').innerText = data.recovery.material;
+        document.getElementById('scanRecoveryScoreVal').innerText = `${data.recovery.score}/100 (${data.recovery.route.toUpperCase()})`;
+
+        // Top 5 probabilities
+        const probDiv = document.getElementById('scanProbList');
+        probDiv.innerHTML = data.classification.top_k.map(k => `
+          <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:12px;">
+            <span>${k.label}</span>
+            <span><strong>${(k.confidence * 100).toFixed(1)}%</strong></span>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); height:4px; border-radius:2px; overflow:hidden; margin-top:2px;">
+            <div style="background:#3b82f6; width:${(k.confidence * 100)}%; height:100%;"></div>
+          </div>
+        `).join('');
+
+        // Populate Recycling Potential Analysis
+        const rp = data.recycling_potential || {};
+        document.getElementById('scanRecyclabilityIdx').innerText = `${rp.effective_recyclability_index || rp.recyclability_index || 80}%`;
+        document.getElementById('scanGradeLabel').innerText = rp.grade_label || 'High Grade';
+        document.getElementById('scanScrapRate').innerText = rp.market_scrap_rate || 'Market Rate Available';
+        document.getElementById('scanViabilityBadge').innerText = rp.economic_viability ? `${rp.economic_viability} Viability` : 'Active Market';
+        document.getElementById('scanLifecycleLoops').innerText = rp.lifecycle_loops || 'Multiple mechanical cycles';
+        document.getElementById('scanDowncyclingRisk').innerText = rp.downcycling_risk || 'Low';
+        document.getElementById('scanProcessingMethod').innerText = rp.processing_method || 'Sorting -> Shredding -> Granulation';
+        document.getElementById('scanContamSensitivity').innerText = rp.contamination_sensitivity || 'Medium';
+
+        // Buyer industries
+        const buyerDiv = document.getElementById('scanBuyerIndustries');
+        if (rp.buyer_industries) {
+          buyerDiv.innerHTML = rp.buyer_industries.map(b => `<span class="badge badge-purple">${b}</span>`).join('');
+        }
+
+        // Populate AI Recommendation Engine
+        const reco = data.recommendation || {};
+        const citizenList = document.getElementById('scanCitizenProtocolList');
+        if (reco.citizen_protocol && reco.citizen_protocol.length > 0) {
+          citizenList.innerHTML = reco.citizen_protocol.map(s => `<li>${s}</li>`).join('');
+        } else {
+          citizenList.innerHTML = `<li>Segregate into appropriate dry/wet bin.</li><li>Clean and dry before discarding.</li>`;
+        }
+
+        document.getElementById('scanMrfActionText').innerText = reco.mrf_facility_action || reco.action;
+        document.getElementById('scanCircularDemandText').innerText = reco.circular_economy_demand || 'Eligible for formal recycling chains.';
+
+        // Environmental offset pills
+        const env = reco.environmental_impact || {};
+        document.getElementById('scanPillEnergy').innerText = `⚡ Energy Saved: ${env.energy_saved_pct || 75}%`;
+        document.getElementById('scanPillCo2').innerText = `🌱 CO₂ Avoided: ${env.co2_reduction_kg || 1.4} kg/kg`;
+        document.getElementById('scanPillWater').innerText = `💧 Water Saved: ${env.water_saved_liters || 25} L/kg`;
+
+        // Refresh recent scans table in dashboard
+        fetchAllData();
+
+      } catch (err) {
+        alert('Error: ' + err.message);
+        document.getElementById('scanStatusBadge').innerText = 'Error';
+        document.getElementById('scanStatusBadge').className = 'badge badge-high';
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '⚡ Analyze Photo with AI & Generate Grad-CAM';
+      }
+    }
+
+    // 6. Interactive AI Recommendation & Circular Simulator
+    async function runSimulation() {
+      const cls = document.getElementById('simWasteClass').value;
+      const wt = parseFloat(document.getElementById('simWeightKg').value) || 50;
+      const cond = document.getElementById('simCondition').value;
+
+      try {
+        const res = await fetch(`/api/v1/recommendations/simulate?waste_class=${encodeURIComponent(cls)}&weight_kg=${wt}&condition=${encodeURIComponent(cond)}`);
+        const d = await res.json();
+
+        const rp = d.recycling_potential || {};
+        const reco = d.recommendation || {};
+        const env = reco.environmental_impact || {};
+
+        document.getElementById('simRecRouteBadge').innerText = reco.route.toUpperCase();
+        document.getElementById('simRecRouteBadge').className = `badge ${reco.route === 'recycle' ? 'badge-blue' : (reco.route === 'compost' ? 'badge-low' : 'badge-med')}`;
+
+        // Compute total scrap estimate
+        document.getElementById('simRatePerKg').innerText = `@ ${rp.market_scrap_rate || 'Variable'}`;
+        document.getElementById('simScrapValueText').innerText = `${rp.market_scrap_rate ? rp.market_scrap_rate.split('/')[0] : 'Rs. 25'} (est.)`;
+        document.getElementById('simTotalCo2Text').innerText = `${env.total_co2_avoided_kg || (wt * 1.5).toFixed(1)} kg CO₂e`;
+
+        document.getElementById('simCoreActionText').innerText = reco.action;
+
+        const citUl = document.getElementById('simCitizenList');
+        if (reco.citizen_protocol) {
+          citUl.innerHTML = reco.citizen_protocol.map(c => `<li>${c}</li>`).join('');
+        }
+
+        document.getElementById('simMrfDirectiveText').innerText = reco.mrf_facility_action;
+
+      } catch (e) {
+        console.error('Simulation error:', e);
+      }
+    }
+  </script>
+</body>
+</html>

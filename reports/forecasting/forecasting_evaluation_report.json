@@ -1,0 +1,497 @@
+{
+  "historical_period": "2016-2023",
+  "target": "gen_total_ulb_tpd",
+  "regions": [
+    "Amravati",
+    "Aurangabad",
+    "Chandrapur",
+    "Kalyan",
+    "Kolhapur",
+    "Mumbai",
+    "Nagpur",
+    "Nashik",
+    "Navi Mumbai",
+    "Pune",
+    "Raigad",
+    "Thane"
+  ],
+  "validation_strategy": "rolling_origin_expanding_window",
+  "candidate_models": {
+    "naive_previous_year": {
+      "MAE": 72.07145833333331,
+      "RMSE": 127.17600747749816,
+      "MAPE": 3.1656511258793896,
+      "R2": 0.9944015395006071,
+      "samples_evaluated": 48
+    },
+    "linear_regression": {
+      "MAE": 132.4032744013798,
+      "RMSE": 232.1196395688729,
+      "MAPE": 7.188701596839624,
+      "R2": 0.9813498632799394,
+      "samples_evaluated": 48
+    },
+    "random_forest": {
+      "MAE": 81.44366083333324,
+      "RMSE": 133.95600226099538,
+      "MAPE": 3.8064198523747095,
+      "R2": 0.9937886986372375,
+      "samples_evaluated": 48
+    },
+    "gradient_boosting": {
+      "MAE": 73.51830596267742,
+      "RMSE": 123.43974625280815,
+      "MAPE": 3.403371950372928,
+      "R2": 0.994725658018933,
+      "samples_evaluated": 48
+    }
+  },
+  "selected_model": "naive_previous_year",
+  "selected_model_metrics": {
+    "MAE": 72.07145833333331,
+    "RMSE": 127.17600747749816,
+    "MAPE": 3.1656511258793896,
+    "R2": 0.9944015395006071,
+    "samples_evaluated": 48
+  },
+  "horizon_years": [
+    2024,
+    2025,
+    2026,
+    2027
+  ],
+  "forecasts": [
+    {
+      "region": "Amravati",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 809.92,
+      "lower_bound": 651.32,
+      "upper_bound": 968.52,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Amravati",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 809.92,
+      "lower_bound": 585.63,
+      "upper_bound": 1034.21,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Amravati",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 809.92,
+      "lower_bound": 535.22,
+      "upper_bound": 1084.62,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Amravati",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 809.92,
+      "lower_bound": 492.73,
+      "upper_bound": 1127.11,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Aurangabad",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 1858.55,
+      "lower_bound": 1690.42,
+      "upper_bound": 2026.68,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Aurangabad",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 1858.55,
+      "lower_bound": 1620.77,
+      "upper_bound": 2096.33,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Aurangabad",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 1858.55,
+      "lower_bound": 1567.34,
+      "upper_bound": 2149.76,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Aurangabad",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 1858.55,
+      "lower_bound": 1522.28,
+      "upper_bound": 2194.82,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Chandrapur",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 503.46,
+      "lower_bound": 407.72,
+      "upper_bound": 599.2,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Chandrapur",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 503.46,
+      "lower_bound": 368.06,
+      "upper_bound": 638.86,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Chandrapur",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 503.46,
+      "lower_bound": 337.63,
+      "upper_bound": 669.29,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Chandrapur",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 503.46,
+      "lower_bound": 311.97,
+      "upper_bound": 694.95,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kalyan",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 1606.0,
+      "lower_bound": 1463.89,
+      "upper_bound": 1748.11,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kalyan",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 1606.0,
+      "lower_bound": 1405.03,
+      "upper_bound": 1806.97,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kalyan",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 1606.0,
+      "lower_bound": 1359.86,
+      "upper_bound": 1852.14,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kalyan",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 1606.0,
+      "lower_bound": 1321.78,
+      "upper_bound": 1890.22,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kolhapur",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 823.14,
+      "lower_bound": 774.44,
+      "upper_bound": 871.84,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kolhapur",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 823.14,
+      "lower_bound": 754.26,
+      "upper_bound": 892.02,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kolhapur",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 823.14,
+      "lower_bound": 738.78,
+      "upper_bound": 907.5,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Kolhapur",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 823.14,
+      "lower_bound": 725.73,
+      "upper_bound": 920.55,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Mumbai",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 6690.0,
+      "lower_bound": 5030.23,
+      "upper_bound": 8349.77,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Mumbai",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 6690.0,
+      "lower_bound": 4342.74,
+      "upper_bound": 9037.26,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Mumbai",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 6690.0,
+      "lower_bound": 3815.2,
+      "upper_bound": 9564.8,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Mumbai",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 6690.0,
+      "lower_bound": 3370.47,
+      "upper_bound": 10009.53,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nagpur",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 1688.01,
+      "lower_bound": 1456.59,
+      "upper_bound": 1919.43,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nagpur",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 1688.01,
+      "lower_bound": 1360.73,
+      "upper_bound": 2015.29,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nagpur",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 1688.01,
+      "lower_bound": 1287.17,
+      "upper_bound": 2088.85,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nagpur",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 1688.01,
+      "lower_bound": 1225.16,
+      "upper_bound": 2150.86,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nashik",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 2245.07,
+      "lower_bound": 1979.69,
+      "upper_bound": 2510.45,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nashik",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 2245.07,
+      "lower_bound": 1869.77,
+      "upper_bound": 2620.37,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nashik",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 2245.07,
+      "lower_bound": 1785.42,
+      "upper_bound": 2704.72,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Nashik",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 2245.07,
+      "lower_bound": 1714.32,
+      "upper_bound": 2775.82,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Navi Mumbai",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 743.0,
+      "lower_bound": 688.58,
+      "upper_bound": 797.42,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Navi Mumbai",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 743.0,
+      "lower_bound": 666.03,
+      "upper_bound": 819.97,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Navi Mumbai",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 743.0,
+      "lower_bound": 648.74,
+      "upper_bound": 837.26,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Navi Mumbai",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 743.0,
+      "lower_bound": 634.15,
+      "upper_bound": 851.85,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Pune",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 4439.9,
+      "lower_bound": 3805.47,
+      "upper_bound": 5074.33,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Pune",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 4439.9,
+      "lower_bound": 3542.68,
+      "upper_bound": 5337.12,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Pune",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 4439.9,
+      "lower_bound": 3341.03,
+      "upper_bound": 5538.77,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Pune",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 4439.9,
+      "lower_bound": 3171.03,
+      "upper_bound": 5708.77,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Raigad",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 593.36,
+      "lower_bound": 235.26,
+      "upper_bound": 951.46,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Raigad",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 593.36,
+      "lower_bound": 86.93,
+      "upper_bound": 1099.79,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Raigad",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 593.36,
+      "lower_bound": 0.0,
+      "upper_bound": 1213.61,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Raigad",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 593.36,
+      "lower_bound": 0.0,
+      "upper_bound": 1309.56,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Thane",
+      "forecast_year": 2024,
+      "predicted_gen_total_ulb_tpd": 2148.9,
+      "lower_bound": 1891.57,
+      "upper_bound": 2406.23,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Thane",
+      "forecast_year": 2025,
+      "predicted_gen_total_ulb_tpd": 2148.9,
+      "lower_bound": 1784.99,
+      "upper_bound": 2512.81,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Thane",
+      "forecast_year": 2026,
+      "predicted_gen_total_ulb_tpd": 2148.9,
+      "lower_bound": 1703.2,
+      "upper_bound": 2594.6,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    },
+    {
+      "region": "Thane",
+      "forecast_year": 2027,
+      "predicted_gen_total_ulb_tpd": 2148.9,
+      "lower_bound": 1634.25,
+      "upper_bound": 2663.55,
+      "model_name": "naive_previous_year",
+      "model_version": "1.0.0"
+    }
+  ]
+}

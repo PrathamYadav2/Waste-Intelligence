@@ -1,0 +1,2 @@
+# Configuration
+Sources: environment variables (`.env`, copy of `.env.example`) -> `src/config.py`; YAML in `configs/` for non-secret structure. Dataset paths are always env vars: `DATA_ROOT, REALWASTE_PATH, TRASHNET_PATH, TACO_PATH, REGIONAL_DATA_PATH, RECOVERY_GUIDANCE_PATH` (blank by default). Also `DATABASE_URL, AUTH_MODE, API_KEY, LOG_LEVEL, MODEL_REGISTRY_DIR`. `.env` is git-ignored. `check_env.py` reports presence only.
