@@ -302,3 +302,9 @@ def score_recovery(inp: RecoveryInput) -> RecoveryResult:
         rationale=rationale,
         recycling_potential=potential
     )
+
+
+def compute_recovery_score(waste_class: str, material: str | None = None, condition: str | None = None) -> RecoveryResult:
+    """Helper function to compute waste recovery result with simple arguments."""
+    return score_recovery(RecoveryInput(waste_class=waste_class, material=material, condition=condition))
+
