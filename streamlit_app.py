@@ -88,7 +88,13 @@ def load_classifier():
 def load_forecast_data():
     csv_path = ROOT_DIR / "data" / "processed" / "forecasts_2024_2027.csv"
     if csv_path.exists():
-        return pd.read_csv(csv_path)
+        df = pd.read_csv(csv_path)
+        # Normalize column names to standard keys
+        if "forecast_year" in df.columns:
+            df["target_year"] = df["forecast_year"]
+        if "predicted_gen_total_ulb_tpd" in df.columns:
+            df["predicted_tpd"] = df["predicted_gen_total_ulb_tpd"]
+        return df
     return pd.DataFrame()
 
 classifier = load_classifier()
@@ -232,11 +238,16 @@ with tab2:
         regions = sorted(forecast_df["region"].unique().tolist())
         selected_region = st.selectbox("Select Urban Local Body (ULB):", regions, index=regions.index("Pune") if "Pune" in regions else 0)
 
-        r_df = forecast_df[forecast_df["region"] == selected_region].sort_values("target_year")
+        year_col = "target_year" if "target_year" in forecast_df.columns else "forecast_year"
+        pred_col = "predicted_tpd" if "predicted_tpd" in forecast_df.columns else "predicted_gen_total_ulb_tpd"
+
+        r_df = forecast_df[forecast_df["region"] == selected_region].sort_values(by=year_col)
 
         col_m1, col_m2, col_m3, col_m4 = st.columns(4)
-        pred_2024 = r_df[r_df["target_year"] == 2024]["predicted_tpd"].values[0]
-        pred_2027 = r_df[r_df["target_year"] == 2027]["predicted_tpd"].values[0]
+        p2024 = r_df[r_df[year_col] == 2024][pred_col].values
+        p2027 = r_df[r_df[year_col] == 2027][pred_col].values
+        pred_2024 = float(p2024[0]) if len(p2024) > 0 else 0.0
+        pred_2027 = float(p2027[0]) if len(p2027) > 0 else 0.0
         diff_2027 = pred_2027 - pred_2024
 
         with col_m1:
@@ -249,18 +260,23 @@ with tab2:
             st.metric("Validation Accuracy", "96.83% (3.17% MAPE)")
 
         # Plot Trend Chart
-        chart_data = r_df.set_index("target_year")[["predicted_tpd", "lower_tpd", "upper_tpd"]]
-        chart_data.columns = ["Forecasted Generation (TPD)", "Lower Bound (-1.96σ)", "Upper Bound (+1.96σ)"]
+        cols_to_plot = [pred_col]
+        for c in ["lower_tpd", "upper_tpd"]:
+            if c in r_df.columns:
+                cols_to_plot.append(c)
+        chart_data = r_df.set_index(year_col)[cols_to_plot]
         st.line_chart(chart_data)
 
         # Full Ledger Table
         st.markdown("#### 📋 2024–2027 Municipal Forecast Ledger (All 12 Regions)")
         
         # Aggregate view by region for 2024 and 2027
-        pivoted = forecast_df.pivot(index="region", columns="target_year", values="predicted_tpd").round(1)
-        pivoted["Net Change by 2027 (TPD)"] = (pivoted[2027] - pivoted[2024]).round(1)
-        pivoted["Annual Growth Rate (TPD/yr)"] = ((pivoted[2027] - pivoted[2024]) / 3).round(1)
+        pivoted = forecast_df.pivot(index="region", columns=year_col, values=pred_col).round(1)
+        if 2027 in pivoted.columns and 2024 in pivoted.columns:
+            pivoted["Net Change by 2027 (TPD)"] = (pivoted[2027] - pivoted[2024]).round(1)
+            pivoted["Annual Growth Rate (TPD/yr)"] = ((pivoted[2027] - pivoted[2024]) / 3).round(1)
         st.dataframe(pivoted, use_container_width=True)
+
 
 # =============================================================================
 # TAB 3: AI Recommendation Simulator
