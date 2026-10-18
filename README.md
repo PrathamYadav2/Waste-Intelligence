@@ -18,7 +18,7 @@ $$\text{Image} \longrightarrow \text{AI Vision} \longrightarrow \text{Material} 
 
 1. **AI Computer Vision (MobileNetV3):** Classifies waste items across 9 RealWaste categories with multi-view Test-Time Augmentation (TTA) and aspect-ratio preservation.
 2. **Explainable AI (Grad-CAM):** Generates backpropagated gradient heatmaps showing the visual features that drove the prediction.
-3. **Deep Recycling Potential Engine:** Evaluates recyclability indices (0–100%), Indian secondary scrap market rates (₹/kg), material degradation limits, downcycling risks, and industrial processing pathways.
+3. **Deep Recycling Potential Engine:** Evaluates recyclability indices (0–100%).
 4. **Multi-Tier AI Recommendation Engine:** Formulates tailored directives across three distinct stakeholders:
    - 🏠 **Citizen Protocol:** At-source segregation, pre-cleaning, and bin assignment (Green/Blue/Black).
    - 🏭 **Municipal MRF Directives:** Material Recovery Facility processing, optical sorting, and baling.
